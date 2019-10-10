@@ -1,0 +1,1 @@
+GRAVITATIONAL = 6.672e-8  # GG  = 6.672d-8       ; Gravitational constant
