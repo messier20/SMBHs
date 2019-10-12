@@ -9,4 +9,4 @@ class Isothermal:
 
     def calculate(self):
         Callculator = ProfileFormulas(self.total_mass)
-        return Callculator.calc_masst(self.radius, self.virial_radius)
+        return Callculator.calc_mt(self.total_mass, self.radius, self.virial_radius)
