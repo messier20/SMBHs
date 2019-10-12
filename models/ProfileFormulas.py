@@ -2,27 +2,16 @@ import math
 
 
 class ProfileFormulas:
-    def __init__(self, total_mass):
-        self.total_mass = total_mass
-        self.multiply = self.multiply()
+    def __init__(self):
+        pass
 
     @staticmethod
-    def calc_mt(total_mass, radius, distance1, *distance2):
-        try:
-            distance2[0]
-        except IndexError:
-            return total_mass * radius / distance1
-        else:
-            return total_mass * radius / distance1 * distance2[0]
+    def calc_mass(mass, radius, distance1, distance2=1):
+        return mass * radius / distance1 * distance2
 
     @staticmethod
-    def calc_density(total_mass, coef, radius, distance, *concentration):
-        try:
-            concentration[0]
-        except IndexError:
-            return total_mass / (coef * math.pi * (radius ** 3)) / distance
-        else:
-            return total_mass / (coef * math.pi * (radius ** 3) * concentration[0]) / distance
+    def calc_density(mass, coef, radius, distance=1, concentration=1):
+        return mass / (coef * math.pi * (radius ** 3) * concentration) / distance
 
     @staticmethod
     def multiply(*args):
@@ -37,19 +26,14 @@ class ProfileFormulas:
         return multiplication_res
 
     @staticmethod
-    def calc_phi(mass, distance, *concentration):
+    def calc_phi(mass, distance, concentration1=1, concentration2=1):
         """
         mass/distance/concentration[0]*concentration[1]
         :rtype: float
         :param mass: Required
         :param distance: Required
-        :param concentration: Not required, but when using, pass two params so the calculation would be correct. Pass only for NFW model
+        :param concentration1: Not required, but when using, pass two params so the calculation would be correct. Pass only for NFW model
+        :param concentration2: Not required, but when using, pass two params so the calculation would be correct. Pass only for NFW model
         :return: phi
         """
-        try:
-            concentration[0]
-            concentration[1]
-        except IndexError:
-            return mass / distance
-        else:
-            return mass / distance / concentration[0] * concentration[1]
+        return mass / distance / concentration1 * concentration2

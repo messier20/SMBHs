@@ -13,31 +13,100 @@
 # disc_scale = num_params[4] -->> could be disc_scaled?
 # fbt = num_params[5] -> bulge_disc_totalmass_fraction,
 # fgh = num_params[6] -> halo_gas_fraction
-# fgb = num_params[7] -> bulge_disc_gas_fraction
+# bulge_disc_gas_fraction = num_params[7] -> bulge_disc_gas_fraction
 # bt = num_params[8] -> bulge_totalmass
 from models.Isothermal import Isothermal
 from models.NFW import NFW
+from models.ProfileFormulas import ProfileFormulas
+import math
 
+
+# TODO figure out correct names for variables from physics
 
 def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profile, bulge_profile, disc_profile,
                      total_mass, virial_radius, halo_concentration_parameter, bulge_scale, disc_scale,
                      bulge_disc_totalmass_fraction, halo_gas_fraction, bulge_disc_gas_fraction, bulge_totalmass):
+    Calculator = ProfileFormulas()
 
-    halo_scale = virial_radius/halo_concentration_parameter
-    radius_scaled = radius/halo_scale
+    halo_scale = virial_radius / halo_concentration_parameter
+    radius_scaled = radius / halo_scale
 
     NFWHaloProfile = NFW(total_mass, radius_scaled, halo_concentration_parameter)
-    halo_profile_ans = NFWHaloProfile.calc_mass(total_mass, dot_radius, dotdot_radius, halo_scale, radius_scaled)
-    print(halo_profile_ans, 'halo')
+    (mt, mdt, mddt, rho_halo, rho2_halo, phi_halo, phi_grad_halo) = NFWHaloProfile.calc_mass(total_mass, dot_radius,
+                                                                                             dotdot_radius, halo_scale,
+                                                                                             radius_scaled, radius)
+
+    print(mt)
+    print(mdt)
+    print(mddt)
+    print(rho_halo)
+    print(rho2_halo)
+    print(phi_halo)
+    print(phi_grad_halo)
+
+    bulge_disc_mass_member = 1 - bulge_disc_totalmass_fraction
+    halo_gas_member = 1 - halo_gas_fraction
+    bulge_halo_members = bulge_disc_mass_member * halo_gas_member
+
+    mhp = mt * bulge_halo_members
+    mdhp = mdt * bulge_halo_members
+    mddhp = mddt * bulge_halo_members
+    phihp = phi_halo * bulge_halo_members
+    phigradhp = phi_grad_halo * bulge_halo_members
+
+    mhg = mt * bulge_disc_mass_member * halo_gas_fraction
+    mdhg = mdt * bulge_disc_mass_member * halo_gas_fraction
+    mddhg = mddt * bulge_disc_mass_member * halo_gas_fraction
+    phihg = phi_halo * bulge_disc_mass_member * halo_gas_fraction / 2
+    phigradhg = phi_grad_halo * bulge_disc_mass_member * halo_gas_fraction / 2
+
+    phih = phihp + phihg
+    phigradh = phigradhp + phigradhg
+
+    rhohgas = rho_halo * bulge_disc_mass_member * halo_gas_fraction
+    rhohgas2 = rho2_halo * bulge_disc_mass_member * halo_gas_fraction
 
     #
-    mbb = bulge_totalmass * bulge_disc_totalmass_fraction * total_mass      # mbb - what's that?
+    mbb = bulge_totalmass * bulge_disc_totalmass_fraction * total_mass  # mbb - what's that?
+    bulge_scaled = radius / bulge_scale
 
-    IsothermalBulgeProfile = Isothermal(mbb, radius, bulge_scale)
-    mass = IsothermalBulgeProfile.calculate()
-    print(mass, 'mass')
-    print(bulge_profile)
+    IsothermalBulgeProfile = Isothermal()
+    (mb, mdb, mddb, rho_bulge, rho2_bulge, phi_bulge, phi_grad_bulge) = IsothermalBulgeProfile.calculate(mbb, radius,
+                                                                                                         dot_radius,
+                                                                                                         dotdot_radius,
+                                                                                                         bulge_scale)
+    print(mb)
+    print(mdb)
+    print(mddb)
+    print(rho_bulge)
+    print(rho2_bulge)
+    print(phi_bulge)
+    print(phi_grad_bulge)
 
-    return radius, dot_radius, dotdot_radius, delta_radius, halo_profile, bulge_profile, \
-           disc_profile, total_mass, virial_radius, halo_concentration_parameter, bulge_scale, disc_scale,\
-           bulge_disc_totalmass_fraction, halo_gas_fraction, bulge_disc_gas_fraction, bulge_totalmass
+    bulge_disc_gas_member = 1 - bulge_disc_gas_fraction
+
+    mbp = mb * bulge_disc_gas_member
+    mdbp = mdb * bulge_disc_gas_member
+    mddbp = mddb * bulge_disc_gas_member
+    phibp = phi_bulge * bulge_disc_gas_member
+    phigradbp = phi_grad_bulge * bulge_disc_gas_member
+
+    mbg = mb * bulge_disc_gas_fraction
+    mdbg = mdb * bulge_disc_gas_fraction
+    mddbg = mddb * bulge_disc_gas_fraction
+    phibg = phi_bulge * bulge_disc_gas_fraction / 2.
+    phigradbg = phi_grad_bulge * bulge_disc_gas_fraction / 2.
+
+    phib = phibp + phibg
+    phigradb = phigradbp + phigradbg
+
+    rhobgas = rho_bulge * bulge_disc_gas_fraction
+    rhobgas2 = rho2_bulge * bulge_disc_gas_fraction
+
+    deltaphi = Calculator.multiply(4, math.pi, radius ** 2, (rhohgas + rhobgas), delta_radius,
+                                   1 + delta_radius / radius + (delta_radius ** 2) / (3. * radius ** 2), phih + phib)
+
+    sigma = math.sqrt(mt * bulge_disc_mass_member + mb / 2 / radius)
+
+    return mhp + mbp, mdhp + mdbp, mhg + mbg, mdhg + mdbg, mddhg + mddbg, rhohgas + rhobgas, sigma, deltaphi, phih + \
+           phib, phigradh + phigradb, rhohgas2 + rhobgas2
