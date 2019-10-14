@@ -6,6 +6,13 @@ dot_radius = 1.e5 / unit_velocity
 dotdot_radius = 0
 delta_radius = 0
 
+
 halo_profile = params.PROFILE_TYPES.NFW.value
 bulge_profile = params.PROFILE_TYPES.ISOTHERMAL.value
 disc_profile = params.DISC_PROFILE.EXPONENTIAL.value
+
+fade = params.FADE.NONE.value
+driving_force = params.DRIVING_FORCE.ENERGY_DRIVING
+integration_method = params.INTEGRATION_METHOD.SIMPLE_INTEGRATION.value
+
+eta_drive = 0.05                     #;coupling efficiency between luminosity or momentum and driving power/force

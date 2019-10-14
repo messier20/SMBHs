@@ -21,9 +21,10 @@ leapfrog_dkd = 0
 leapfrog_kdk = 0
 ######
 
-bhg = 1                                 #toggle whether SMBH grows
-repeating = 1.                          #toggle whether quasar outbursts repeat themselves
-fade = 'none'                           #AGN episode fading prescription: none/exponential/powerlaw/king
+smbh_grows = True                                 #toggle whether SMBH grows
+# repeating = 1.                          #toggle whether quasar outbursts repeat themselves
+repeating_equation = True
+
 energy_limit = 0                        #stop AGN activity once E_out,total > f_en*E_binding
 f_en = 1.5
 

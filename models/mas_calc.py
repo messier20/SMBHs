@@ -26,6 +26,26 @@ import math
 def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profile, bulge_profile, disc_profile,
                      total_mass, virial_radius, halo_concentration_parameter, bulge_scale, disc_scale,
                      bulge_disc_totalmass_fraction, halo_gas_fraction, bulge_disc_gas_fraction, bulge_totalmass):
+    """
+
+    :param radius:
+    :param dot_radius:
+    :param dotdot_radius:
+    :param delta_radius:
+    :param halo_profile:
+    :param bulge_profile:
+    :param disc_profile:
+    :param total_mass:
+    :param virial_radius:
+    :param halo_concentration_parameter:
+    :param bulge_scale:
+    :param disc_scale:
+    :param bulge_disc_totalmass_fraction:
+    :param halo_gas_fraction:
+    :param bulge_disc_gas_fraction:
+    :param bulge_totalmass:
+    :return: mp, mdp, mg, mdg, mddg, rhogas, sigma, deltaphi, phi, phigrad, rhogas2
+    """
     Calculator = ProfileFormulas()
 
     halo_scale = virial_radius / halo_concentration_parameter
