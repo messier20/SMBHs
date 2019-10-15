@@ -3,16 +3,22 @@ from input_parameters.galaxy_parameters import *
 from input_parameters.initial_values import *
 from input_parameters.program_constants import *
 from input_parameters.switches import *
-from models.driving_force_calc import DrivingForceIntegrator
+from abstractions.DrivingForceIntegrator import DrivingForceIntegrator
 from models.mas_calc import mass_calculation
 from abstractions.FadeTypeSwitcher import FadeTypeSwitcher
+
+
+def ending(is_main_loop):
+    is_main_loop = False
+    print('Iteration number ', k, ' finished')
+    return is_main_loop
 
 if __name__ == '__main__':
     # start of main loop
     # for k = 0, niter-1 do begin;n_elements(params[*, 0])-1 do begin
 
     FadeTypeSwitcher = FadeTypeSwitcher()
-    DrivingForceIntegrator = DrivingForceIntegrator()
+    Integrator = DrivingForceIntegrator()
 
     is_main_loop = True
     for k in range(ITERATIONS_NUM):
@@ -43,19 +49,19 @@ if __name__ == '__main__':
             total_mass_arr[k, index] = mg + mp
             dot_mass_arr[k, index] = mdg
 
-            print(mp)
+            print(mp, 'mp')
             print(mdp)
-            print(mg)
-            print(mass_out_arr)
-            print(total_mass_arr)
+            print(mg, ' mg')
+            print(mass_out_arr, ' mass out')
+            print(total_mass_arr, ' totalmass')
             print(mdg)
-            print(dot_mass_arr)
+            print(dot_mass_arr, 'dotmass')
             print(mddg)
             print(rhogas)
             print(sigma)
             print(phi)
             print(phigrad)
-            print(rhogas2)
+            print(rhogas2, 'rhogas2')
 
             # ;this sets the timestep with 'Courant' criterion 0.1. In fact, this is
             # ;a little sloppy, since we should set the timestep after calculating
@@ -82,21 +88,62 @@ if __name__ == '__main__':
             if repeating_equation:
                 time_eff = time_arr[k, index] % quasar_dts[k]
             else:
-                time_eff = time_arr[k, i]
+                time_eff = time_arr[k, index]
 
             luminosity_coef = FadeTypeSwitcher.calc_luminosity_coef(fade, time_eff, quasar_duration)
             print(luminosity_coef)
-            luminosity_edd = 1.3e38 * (smbh_masses[k] * unit_mass / 1.989e33) * unit_time / unit_energy  # ;eddington luminosity for the current SMBH mass
+            luminosity_edd = 1.3e38 * (smbh_masses[
+                                           k] * unit_mass / 1.989e33) * unit_time / unit_energy  # ;eddington luminosity for the current SMBH mass
             luminosity = luminosity_coef * luminosity_edd
             luminosity_arr[k, index + 1] = luminosity  # ;actual luminosity
 
             # ;grow the SMBH
             if smbh_grows:
-                smbh_mass = smbh_masses[k] * math.exp(luminosity_coef * dt / salpeter_timescale)  #;new BH mass
+                smbh_mass = smbh_masses[k] * math.exp(luminosity_coef * dt / salpeter_timescale)  # ;new BH mass
 
             # ;SMBH growth and luminosity calculation ends
 
-            a = DrivingForceIntegrator.driving_force_calc(driving_force, mg, radius, eta_drive, integration_method)
-            print(a)
+            (dot_radius_arr, dot_radius, dotdot_radius) = \
+                Integrator.driving_force_calc(driving_force, mg, radius, eta_drive, integration_method, luminosity, mdg,
+                                              dot_radius, dotdot_radius, mp, mdp, mddg, dot_rt_arr, radius_arr,
+                                              dot_radius_arr, dotdot_radius_arr, k, index, dt)
+            print(dot_radius_arr, ' dot_radius_arr')
+            print(dot_radius, ' dot_radius')
+            print(dotdot_radius, ' dotdot_radius')
+
+            # TODO implement clearing oscillations
+            # if clear_oscillations:
+
+            pressure_contact_arr[k, index] = 4. / 3. * (dot_radius ** 2) * rhogas2 * (
+                    1. - 1. / (5. * dot_radius / sigma) ** 2)
+            pressure_outer_arr[k, index] = (mg * dotdot_radius + mdg * dot_radius + mg * (mp + mg / 2.) / (
+                    radius ** 2)) / (4 * math.pi * (radius ** 2))
+            # pres[k, i] = 4. / 3. * rd ^ 2. * rhogas2 * (1. - 1. / (5. * (rd / sigma) ^ 2.))  # ;pressure at the outer shock
+            # p2 = (mg * rdd + mdg * rd + mg * (mp + mg / 2.) / r ^ 2.) / (4 *!pi * r ^ 2.)  # ;pressure at the contact discontinuity
+            # pres2[k, i] = p2
+
+            print(pressure_contact_arr)
+            print(pressure_outer_arr)
+
             index += 1
-            is_main_loop = False
+            # can i write index >= TIMESTEPS
+            if index >= len(radius_arr[:, 0]) - 1:
+                is_main_loop = ending(is_main_loop)
+
+            if time_arr[k, index] >= TIME_MAX:
+                is_main_loop = ending(is_main_loop)
+
+            if radius_arr[k, index] >= RADIUS_MAX:
+                is_main_loop = ending(is_main_loop)
+
+
+        radius_arr = radius_arr * unit_kpc
+        dot_radius = dot_radius * unit_velocity/1.e5
+        time_arr = time_arr * unit_year
+        pressure_contact_arr = pressure_contact_arr / unit_length / (unit_time ** 2)
+        pressure_outer_arr = pressure_outer_arr / unit_length / (unit_time ** 2)
+        dot_mass_arr = dot_mass_arr * unit_sunmass / unit_year
+        mass_out_arr = mass_out_arr * unit_sunmass
+        total_mass_arr = total_mass_arr * unit_sunmass
+
+
