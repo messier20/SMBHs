@@ -56,13 +56,13 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
                                                                                              dotdot_radius, halo_scale,
                                                                                              radius_scaled, radius)
 
-    print(mt)
-    print(mdt)
+    print(mt, ' mt')
+    print(mdt, ' mdt')
     print(mddt)
     print(rho_halo)
     print(rho2_halo)
     print(phi_halo)
-    print(phi_grad_halo)
+    print(phi_grad_halo, ' phigrad')
 
     bulge_disc_mass_member = 1 - bulge_disc_totalmass_fraction
     halo_gas_member = 1 - halo_gas_fraction
@@ -95,13 +95,13 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
                                                                                                          dot_radius,
                                                                                                          dotdot_radius,
                                                                                                          bulge_scale)
-    print(mb)
-    print(mdb)
-    print(mddb)
-    print(rho_bulge)
+    print(mb, ' mb')
+    print(mdb, ' mdb')
+    print(mddb, ' mddb')
+    print(rho_bulge, ' rhobulge')
     print(rho2_bulge)
     print(phi_bulge)
-    print(phi_grad_bulge)
+    print(phi_grad_bulge, ' phigradbulge')
 
     bulge_disc_gas_member = 1 - bulge_disc_gas_fraction
 
