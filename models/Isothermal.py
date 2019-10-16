@@ -10,10 +10,12 @@ class Isothermal:
         mb = self.Callculator.calc_mass(mass, radius, bulge_scale)
         mdb = self.Callculator.calc_mass(mass, dot_radius, bulge_scale)
         mddb = self.Callculator.calc_mass(mass, dotdot_radius, bulge_scale)
-        rho = self.Callculator.calc_density(mass, 4, radius ** 3)
-        rho2 = self.Callculator.calc_density(mass, 4, (4. * radius / 3.) ** 3)
-        phi = self.Callculator.calc_phi(mass, radius * math.log(radius / (2.718281828 * 10 * bulge_scale)))
-        phigrad = self.Callculator.calc_phi(mass, radius ** 2)
+        rho = self.Callculator.calc_density(mass, 4, radius)
+        rho2 = self.Callculator.calc_density(mass, 4, (4. * radius / 3.))
+        phi = mass / radius * math.log(radius / (2.718281828 * 10 * bulge_scale))
+        # print(mass, ' mass')
+        # print(radius, ' radius')
+        phigrad = mass / (radius ** 2)
 
         if mb > mass:
             mb = mass

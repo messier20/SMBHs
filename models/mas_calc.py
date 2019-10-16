@@ -15,6 +15,8 @@
 # fgh = num_params[6] -> halo_gas_fraction
 # bulge_disc_gas_fraction = num_params[7] -> bulge_disc_gas_fraction
 # bt = num_params[8] -> bulge_totalmass
+from decimal import Decimal
+
 from models.Isothermal import Isothermal
 from models.NFW import NFW
 from models.ProfileFormulas import ProfileFormulas
@@ -56,13 +58,13 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
                                                                                              dotdot_radius, halo_scale,
                                                                                              radius_scaled, radius)
 
-    print(mt, ' mt')
-    print(mdt, ' mdt')
-    print(mddt)
-    print(rho_halo)
-    print(rho2_halo)
-    print(phi_halo)
-    print(phi_grad_halo, ' phigrad')
+    # print(mt, ' mt')
+    # print(mdt, ' mdt')
+    # print(mddt)
+    # print(rho_halo)
+    # print(rho2_halo)
+    # print(phi_halo)
+    # print(phi_grad_halo, ' phigrad')
 
     bulge_disc_mass_member = 1 - bulge_disc_totalmass_fraction
     halo_gas_member = 1 - halo_gas_fraction
@@ -88,6 +90,9 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
 
     #
     mbb = bulge_totalmass * bulge_disc_totalmass_fraction * total_mass  # mbb - what's that?
+    # print(bulge_totalmass, ' bt')
+    # print(bulge_disc_totalmass_fraction, ' fbt')
+    # print(total_mass, ' mtot')
     bulge_scaled = radius / bulge_scale
 
     IsothermalBulgeProfile = Isothermal()
@@ -95,13 +100,14 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
                                                                                                          dot_radius,
                                                                                                          dotdot_radius,
                                                                                                          bulge_scale)
-    print(mb, ' mb')
-    print(mdb, ' mdb')
-    print(mddb, ' mddb')
-    print(rho_bulge, ' rhobulge')
-    print(rho2_bulge)
-    print(phi_bulge)
-    print(phi_grad_bulge, ' phigradbulge')
+    # print(mb, ' mb')
+    # print(mdb, ' mdb')
+    # print(mddb, ' mddb')
+    # # print(rho_bulge, ' rhobulge')
+    # print('%.2E' % Decimal(rho_bulge), ' rhobulge')
+    # print(rho2_bulge)
+    # print(phi_bulge)
+    # print(phi_grad_bulge, ' phigradbulge')
 
     bulge_disc_gas_member = 1 - bulge_disc_gas_fraction
 

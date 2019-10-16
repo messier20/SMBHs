@@ -20,8 +20,8 @@ if __name__ == '__main__':
     FadeTypeSwitcher = FadeTypeSwitcher()
     Integrator = DrivingForceIntegrator()
 
-    is_main_loop = True
     for k in range(ITERATIONS_NUM):
+        is_main_loop = True
         #     # maybe niter-1?
         index = 0
 
@@ -38,6 +38,7 @@ if __name__ == '__main__':
 
         while is_main_loop:  # main loop, ends when one of the ending conditions is reached -
             # either number of timesteps, time or outflow radius pass a threshold
+            
 
             (mp, mdp, mg, mdg, mddg, rhogas, sigma, deltaphi, phi, phigrad, rhogas2) = \
                 mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profile, bulge_profile,
@@ -49,19 +50,19 @@ if __name__ == '__main__':
             total_mass_arr[k, index] = mg + mp
             dot_mass_arr[k, index] = mdg
 
-            print(mp, 'mp')
-            print(mdp)
-            print(mg, ' mg')
-            print(mass_out_arr, ' mass out')
-            print(total_mass_arr, ' totalmass')
-            print(mdg)
-            print(dot_mass_arr, 'dotmass')
-            print(mddg)
-            print(rhogas)
-            print(sigma)
-            print(phi)
-            print(phigrad)
-            print(rhogas2, 'rhogas2')
+            # print(mp, 'mp')
+            # print(mdp)
+            # print(mg, ' mg')
+            # print(mass_out_arr, ' mass out')
+            # print(total_mass_arr, ' totalmass')
+            # print(mdg)
+            # print(dot_mass_arr, 'dotmass')
+            # print(mddg)
+            # print(rhogas)
+            # print(sigma)
+            # print(phi)
+            # print(phigrad)
+            # print(rhogas2, 'rhogas2')
 
             # ;this sets the timestep with 'Courant' criterion 0.1. In fact, this is
             # ;a little sloppy, since we should set the timestep after calculating
@@ -80,9 +81,11 @@ if __name__ == '__main__':
             dot_time_arr[k, index + 1] = dt
             time_arr[k, index + 1] = time_arr[k, index] + dt
 
-            print(dt)
-            print(dot_time_arr, ' dot time arr')
-            print(time_arr, ' time arr')
+            # print(dt)
+            # print(dot_time_arr, ' dot time arr')
+            # print(time_arr, ' time arr')
+            # print(time_arr[k, index], ' time at index')
+            # print(time_arr[k, index + 1], ' time at index + 1')
 
             # ;AGN luminosity, first in terms of Eddington factor
             if repeating_equation:
@@ -107,43 +110,62 @@ if __name__ == '__main__':
                 Integrator.driving_force_calc(driving_force, mg, radius, eta_drive, integration_method, luminosity, mdg,
                                               dot_radius, dotdot_radius, mp, mdp, mddg, dot_rt_arr, radius_arr,
                                               dot_radius_arr, dotdot_radius_arr, k, index, dt)
-            print(dot_radius_arr, ' dot_radius_arr')
-            print(dot_radius, ' dot_radius')
-            print(dotdot_radius, ' dotdot_radius')
+            # print(dotdot_radius_arr[k, index + 1], ' dotdot_radius_arr index + 1')
+            # print(dotdot_radius_arr[k, index ], ' dotdot_radius_arr index')
+            # print(dot_radius_arr[k, index + 1], ' dot_radius index + 1')
+            # print(dot_radius_arr[k, index ], ' dot_radius_arr index')
+            # print(radius_arr[k, index + 1], ' radius index + 1')
+            # print(radius_arr[k, index], 'radius index ')
 
             # TODO implement clearing oscillations
             # if clear_oscillations:
 
             pressure_contact_arr[k, index] = 4. / 3. * (dot_radius ** 2) * rhogas2 * (
-                    1. - 1. / (5. * dot_radius / sigma) ** 2)
+                    1. - 1. / (5. * ((dot_radius / sigma) ** 2)))
             pressure_outer_arr[k, index] = (mg * dotdot_radius + mdg * dot_radius + mg * (mp + mg / 2.) / (
                     radius ** 2)) / (4 * math.pi * (radius ** 2))
             # pres[k, i] = 4. / 3. * rd ^ 2. * rhogas2 * (1. - 1. / (5. * (rd / sigma) ^ 2.))  # ;pressure at the outer shock
             # p2 = (mg * rdd + mdg * rd + mg * (mp + mg / 2.) / r ^ 2.) / (4 *!pi * r ^ 2.)  # ;pressure at the contact discontinuity
             # pres2[k, i] = p2
 
-            print(pressure_contact_arr)
-            print(pressure_outer_arr)
+            # print(pressure_contact_arr, ' pressure contact')
+            # print(pressure_outer_arr, ' pressure outer')
 
             index += 1
             # can i write index >= TIMESTEPS
-            if index >= len(radius_arr[:, 0]) - 1:
+            if index >= len(radius_arr[0,]) - 1:
+                print(' timesteps')
                 is_main_loop = ending(is_main_loop)
 
+            print(time_arr[k, index])
             if time_arr[k, index] >= TIME_MAX:
+                print('time')
                 is_main_loop = ending(is_main_loop)
 
             if radius_arr[k, index] >= RADIUS_MAX:
+                print('radiusmax')
                 is_main_loop = ending(is_main_loop)
 
+            # is_main_loop = False
 
-        radius_arr = radius_arr * unit_kpc
-        dot_radius = dot_radius * unit_velocity/1.e5
-        time_arr = time_arr * unit_year
-        pressure_contact_arr = pressure_contact_arr / unit_length / (unit_time ** 2)
-        pressure_outer_arr = pressure_outer_arr / unit_length / (unit_time ** 2)
-        dot_mass_arr = dot_mass_arr * unit_sunmass / unit_year
-        mass_out_arr = mass_out_arr * unit_sunmass
-        total_mass_arr = total_mass_arr * unit_sunmass
+    radius_arr = radius_arr * unit_kpc
+    dot_radius = dot_radius * unit_velocity/1.e5
+    time_arr = time_arr * unit_year
+    pressure_contact_arr = pressure_contact_arr / unit_length / (unit_time ** 2)
+    pressure_outer_arr = pressure_outer_arr / unit_length / (unit_time ** 2)
+    dot_mass_arr = dot_mass_arr * unit_sunmass / unit_year
+    mass_out_arr = mass_out_arr * unit_sunmass
+    total_mass_arr = total_mass_arr * unit_sunmass
+
+    print(radius_arr, ' arr')
+    print(dot_radius, 'dot radius')
+    print(time_arr, ' time')
+    print(pressure_contact_arr, ' pres')
+    print(pressure_outer_arr, 'pres 2')
+    print(dot_mass_arr, ' dot mas')
+    print(mass_out_arr, ' mout')
+    print(total_mass_arr, ' total_mass')
+
+
 
 
