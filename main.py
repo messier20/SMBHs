@@ -172,6 +172,6 @@ if __name__ == '__main__':
     print(mass_out_arr, ' mout')
     print(total_mass_arr, ' total_mass')
 
-    # plotting(time_arr, radius_arr)
+    plotting(time_arr, radius_arr, mass_out_arr, dot_mass_arr)
 
 
