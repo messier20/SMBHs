@@ -2,23 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f124e30-44bf-4641-822a-ea53c5dbb4e4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/input_parameters/galaxy_parameters.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input_parameters/initial_values.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input_parameters/physics_constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input_parameters/program_constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input_parameters/program_units.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/Isothermal.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/NFW.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/ProfileFormulas.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/mas_calc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots/switches.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plots/plotting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/SMBHsFeedback.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SMBHsFeedback.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input_parameters/constants.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/input_parameters/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/input_parameters/parameters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input_parameters/switches.py" beforeDir="false" afterPath="$PROJECT_DIR$/input_parameters/switches.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/abstractions/DrivingForceIntegrator.py" beforeDir="false" afterPath="$PROJECT_DIR$/abstractions/DrivingForceIntegrator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input_parameters/arrays.py" beforeDir="false" afterPath="$PROJECT_DIR$/input_parameters/arrays.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/switches/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/input_parameters/arrays.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate.csh" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate.csh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate.fish" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate.fish" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/easy_install" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/easy_install" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/pip" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/pip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/pip3" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/pip3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/python" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/python" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/python3" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/python3" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,9 +38,10 @@
   <component name="ProjectId" id="1PTVoo1JPxErIFVTpHaIeuS374j" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/main.py" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../proj_1_venv/bin/python" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">

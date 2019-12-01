@@ -45,7 +45,7 @@ class DrivingForceIntegrator:
     def simple_integration(self, dot_rt, dot_rt_arr, radius_arr, dot_radius_arr, dotdot_radius_arr, k, index, dt,
                            radius, dot_radius,
                            dotdot_radius, eta_drive):
-        dot_rt_dt = dot_rt * dt
+        dot_rt_dt = dot_rt * dt #trecia isvestine
         dot_rt_arr[k, index] = dot_rt
         dotdot_radius_arr[k, index + 1] = dotdot_radius + dot_rt_dt
         dot_radius_arr[k, index + 1] = dot_radius + dotdot_radius * dt + 0.5 * dot_rt * (dt ** 2)
@@ -65,7 +65,7 @@ class DrivingForceIntegrator:
             # print((1. / 6.) * dot_rt * dt ** 3)
         # print(dot_rt, ' dot_rt')
         # print(radius_arr[k, index + 1], ' r')
-        return dot_radius_arr, dot_radius, dotdot_radius
+        return radius_arr, dot_radius_arr, dot_radius, dotdot_radius
 
     #     arrrtdot[k, i] = rtdot
     #     arrrddot[k, i + 1] = rdd + rtdot * dt
@@ -97,7 +97,7 @@ class DrivingForceIntegrator:
         rd_r_squared = dot_radius / (radius ** 2)
         add_member_1 = eta_drive * luminosity - mdg_rd_squared - mg * dot_radius * dotdot_radius
         add_member_2 = - 2 * rd_r_squared * mg_mp_member
-        add_member = first_member / mg_r * (add_member_1 + add_member_2) + mass_member
+        add_member = first_member / mg_r * (add_member_1 + add_member_2 + mass_member)
         mg_md_member = mddg * dot_radius / mg + mdg_rd_squared / mg_r
         mg_rdd_member = 2 * mdg * dotdot_radius / mg + dot_radius * dotdot_radius / radius
         add_member_3 = mg_md_member + mg_rdd_member

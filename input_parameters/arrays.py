@@ -4,6 +4,7 @@ from input_parameters.program_constants import ITERATIONS_NUM, TIMESTEPS_NUMB
 radius_arr = np.zeros((ITERATIONS_NUM, TIMESTEPS_NUMB))
 dot_radius_arr = np.zeros((ITERATIONS_NUM, TIMESTEPS_NUMB))
 dotdot_radius_arr = np.zeros((ITERATIONS_NUM, TIMESTEPS_NUMB))
+delta_radius_arr = np.zeros((ITERATIONS_NUM, TIMESTEPS_NUMB))
 mass_out_arr = np.zeros((ITERATIONS_NUM, TIMESTEPS_NUMB))
 total_mass_arr = np.zeros((ITERATIONS_NUM, TIMESTEPS_NUMB))
 dot_mass_arr = np.zeros((ITERATIONS_NUM, TIMESTEPS_NUMB))

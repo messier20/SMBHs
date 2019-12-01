@@ -6,6 +6,7 @@ from input_parameters.switches import *
 from abstractions.DrivingForceIntegrator import DrivingForceIntegrator
 from models.mas_calc import mass_calculation
 from abstractions.FadeTypeSwitcher import FadeTypeSwitcher
+from plots.plotting import plotting
 
 
 def ending(is_main_loop):
@@ -28,6 +29,7 @@ if __name__ == '__main__':
         radius_arr[k, 0] = radius
         dot_radius_arr[k, 0] = dot_radius
         dotdot_radius_arr[k, 0] = dotdot_radius
+        delta_radius_arr[k, 0] = delta_radius
 
         disc_mass = total_masses[k] * bulge_disc_totalmass_fractions[k] * (
                 1 - bulge_totalmasses[k]) * disc_gas_fractions[k]
@@ -41,7 +43,8 @@ if __name__ == '__main__':
             
 
             (mp, mdp, mg, mdg, mddg, rhogas, sigma, deltaphi, phi, phigrad, rhogas2) = \
-                mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profile, bulge_profile,
+                mass_calculation(radius_arr[k, index], dot_radius_arr[k, index], dotdot_radius_arr[k, index],
+                                 delta_radius_arr[k, index], halo_profile, bulge_profile,
                                  disc_profile, total_masses[k], virial_radiuses[k], halo_concentration_parameters[k],
                                  bulge_scale, disc_scale, bulge_disc_totalmass_fractions[k],
                                  halo_gas_fraction, bulge_disc_gas_fractions[k], bulge_totalmasses[k])
@@ -69,9 +72,9 @@ if __name__ == '__main__':
             # ;the expected acceleration, but since r, rdot, rddot, rtdot do not
             # ;change very significantly between timesteps, this is fine
 
-            dot_t1 = (radius + 1.e-8) / (radius + 1.e-8)
-            dot_t2 = (dot_radius + 1.e-8) / (dotdot_radius + 1.e-8)
-            dot_t3 = (dotdot_radius + 1.e-8) / (dot_rt_arr[k, index] + 1.e-8)
+            dot_t1 = (radius_arr[k, index] + 1.e-8) / (radius_arr[k, index] + 1.e-8)
+            dot_t2 = (dot_radius_arr[k, index] + 1.e-8) / (dotdot_radius_arr[k, index] + 1.e-8)
+            dot_t3 = (dotdot_radius_arr[k, index] + 1.e-8) / (dot_rt_arr[k, index] + 1.e-8)
 
             dt = 0.1 * min(abs(dot_t1), abs(dot_t2), abs(dot_t3))
             if dt > DT_MAX / 100. * (10. * time_arr[k, index] + 1.):
@@ -94,7 +97,7 @@ if __name__ == '__main__':
                 time_eff = time_arr[k, index]
 
             luminosity_coef = FadeTypeSwitcher.calc_luminosity_coef(fade, time_eff, quasar_duration)
-            print(luminosity_coef)
+            # print(luminosity_coef)
             luminosity_edd = 1.3e38 * (smbh_masses[
                                            k] * unit_mass / 1.989e33) * unit_time / unit_energy  # ;eddington luminosity for the current SMBH mass
             luminosity = luminosity_coef * luminosity_edd
@@ -106,9 +109,9 @@ if __name__ == '__main__':
 
             # ;SMBH growth and luminosity calculation ends
 
-            (dot_radius_arr, dot_radius, dotdot_radius) = \
-                Integrator.driving_force_calc(driving_force, mg, radius, eta_drive, integration_method, luminosity, mdg,
-                                              dot_radius, dotdot_radius, mp, mdp, mddg, dot_rt_arr, radius_arr,
+            (radius_arr, dot_radius_arr, dot_radius, dotdot_radius) = \
+                Integrator.driving_force_calc(driving_force, mg, radius_arr[k, index], eta_drive, integration_method, luminosity, mdg,
+                                              dot_radius_arr[k, index], dotdot_radius_arr[k, index], mp, mdp, mddg, dot_rt_arr, radius_arr,
                                               dot_radius_arr, dotdot_radius_arr, k, index, dt)
             # print(dotdot_radius_arr[k, index + 1], ' dotdot_radius_arr index + 1')
             # print(dotdot_radius_arr[k, index ], ' dotdot_radius_arr index')
@@ -137,7 +140,7 @@ if __name__ == '__main__':
                 print(' timesteps')
                 is_main_loop = ending(is_main_loop)
 
-            print(time_arr[k, index])
+            # print(time_arr[k, index])
             if time_arr[k, index] >= TIME_MAX:
                 print('time')
                 is_main_loop = ending(is_main_loop)
@@ -157,15 +160,18 @@ if __name__ == '__main__':
     mass_out_arr = mass_out_arr * unit_sunmass
     total_mass_arr = total_mass_arr * unit_sunmass
 
-    print(radius_arr, ' arr')
-    print(dot_radius, 'dot radius')
-    print(time_arr, ' time')
+    print(radius_arr[0, 20990:20999], ' arr, 0, 0-6')
+    print(radius_arr[0:4, 0], ' arr, 0-4, 0')
+    # print(dot_radius[0, 0:6], 'dot radius 0, 0-6') ??? wtf
+    # print(dot_radius[0:4, 0], 'dot radius 0-4, 0') ??
+    print(time_arr[0, 20990:20999], ' time 0, 0-6')
+    print(time_arr[0:4, 0], ' time 0-4, 0')
     print(pressure_contact_arr, ' pres')
     print(pressure_outer_arr, 'pres 2')
     print(dot_mass_arr, ' dot mas')
     print(mass_out_arr, ' mout')
     print(total_mass_arr, ' total_mass')
 
-
+    # plotting(time_arr, radius_arr)
 
 
