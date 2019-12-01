@@ -17,7 +17,7 @@ def plotting(time, radius, mass_out, dot_mass):
     p5 = ax1.scatter(time[4,], radius[4,], color='yellow', marker='.', linewidth=0.3, s=0.3)
     #
     ax1.legend((p1, p2, p3, p4, p5), (r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1'), markerscale=10)
-    fig1.savefig(path + 'plot_threepart1.png', bbox_inches='tight')
+    fig1.savefig(path + 'plot_threepart1_v4.png', bbox_inches='tight')
     plt.close(fig1)
 
     fig2, ax2 = Plot.setup()
@@ -31,7 +31,7 @@ def plotting(time, radius, mass_out, dot_mass):
 
     ax2.legend((p1, p2, p3, p4, p5), (r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1'),
                markerscale=10)
-    fig2.savefig(path + 'plot_threepart2.png', bbox_inches='tight')
+    fig2.savefig(path + 'plot_threepart2_v4.png', bbox_inches='tight')
     plt.close(fig2)
 
     fig3, ax3 = Plot.setup()
@@ -45,7 +45,7 @@ def plotting(time, radius, mass_out, dot_mass):
 
     ax3.legend((p1, p2, p3, p4, p5), (r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1'),
                markerscale=10)
-    fig3.savefig(path + 'plot_threepart3.png', bbox_inches='tight')
+    fig3.savefig(path + 'plot_threepart3_v4.png', bbox_inches='tight')
     plt.close(fig3)
 
 

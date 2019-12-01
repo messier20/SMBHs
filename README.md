@@ -1,5 +1,9 @@
 # SMBHs
 
+##Notes
+with iterations number = 20:
+ exec time --- 45.99974203109741 seconds --- ;
+plot time --- 10.894582033157349 seconds ---
 
 ## Parameters legend
 

@@ -4,26 +4,26 @@ from input_parameters.initial_values import *
 from input_parameters.program_constants import *
 from input_parameters.switches import *
 from abstractions.DrivingForceIntegrator import DrivingForceIntegrator
-from models.mas_calc import mass_calculation
+from models.mass_calc import mass_calculation
 from abstractions.FadeTypeSwitcher import FadeTypeSwitcher
 from plots.plotting import plotting
+import time
 
 
 def ending(is_main_loop):
+    start_time = time.time()
     is_main_loop = False
     print('Iteration number ', k, ' finished')
     return is_main_loop
 
 if __name__ == '__main__':
-    # start of main loop
-    # for k = 0, niter-1 do begin;n_elements(params[*, 0])-1 do begin
+    start_time = time.time()
 
     FadeTypeSwitcher = FadeTypeSwitcher()
     Integrator = DrivingForceIntegrator()
 
     for k in range(ITERATIONS_NUM):
         is_main_loop = True
-        #     # maybe niter-1?
         index = 0
 
         radius_arr[k, 0] = radius
@@ -33,7 +33,6 @@ if __name__ == '__main__':
 
         disc_mass = total_masses[k] * bulge_disc_totalmass_fractions[k] * (
                 1 - bulge_totalmasses[k]) * disc_gas_fractions[k]
-        # mdisc = mtot * fbt * (1 - bt) * fdg
 
         cooling_radius = 0.52 * math.sqrt(
             (bulge_disc_gas_fractions[k] / 0.16)) * 1.e-5 / unit_kpc  # cooling radius in kpc
@@ -41,7 +40,6 @@ if __name__ == '__main__':
         while is_main_loop:  # main loop, ends when one of the ending conditions is reached -
             # either number of timesteps, time or outflow radius pass a threshold
             
-
             (mp, mdp, mg, mdg, mddg, rhogas, sigma, deltaphi, phi, phigrad, rhogas2) = \
                 mass_calculation(radius_arr[k, index], dot_radius_arr[k, index], dotdot_radius_arr[k, index],
                                  delta_radius_arr[k, index], halo_profile, bulge_profile,
@@ -52,20 +50,6 @@ if __name__ == '__main__':
             mass_out_arr[k, index] = mg
             total_mass_arr[k, index] = mg + mp
             dot_mass_arr[k, index] = mdg
-
-            # print(mp, 'mp')
-            # print(mdp)
-            # print(mg, ' mg')
-            # print(mass_out_arr, ' mass out')
-            # print(total_mass_arr, ' totalmass')
-            # print(mdg)
-            # print(dot_mass_arr, 'dotmass')
-            # print(mddg)
-            # print(rhogas)
-            # print(sigma)
-            # print(phi)
-            # print(phigrad)
-            # print(rhogas2, 'rhogas2')
 
             # ;this sets the timestep with 'Courant' criterion 0.1. In fact, this is
             # ;a little sloppy, since we should set the timestep after calculating
@@ -84,12 +68,6 @@ if __name__ == '__main__':
             dot_time_arr[k, index + 1] = dt
             time_arr[k, index + 1] = time_arr[k, index] + dt
 
-            # print(dt)
-            # print(dot_time_arr, ' dot time arr')
-            # print(time_arr, ' time arr')
-            # print(time_arr[k, index], ' time at index')
-            # print(time_arr[k, index + 1], ' time at index + 1')
-
             # ;AGN luminosity, first in terms of Eddington factor
             if repeating_equation:
                 time_eff = time_arr[k, index] % quasar_dts[k]
@@ -97,7 +75,6 @@ if __name__ == '__main__':
                 time_eff = time_arr[k, index]
 
             luminosity_coef = FadeTypeSwitcher.calc_luminosity_coef(fade, time_eff, quasar_duration)
-            # print(luminosity_coef)
             luminosity_edd = 1.3e38 * (smbh_masses[
                                            k] * unit_mass / 1.989e33) * unit_time / unit_energy  # ;eddington luminosity for the current SMBH mass
             luminosity = luminosity_coef * luminosity_edd
@@ -113,14 +90,8 @@ if __name__ == '__main__':
                 Integrator.driving_force_calc(driving_force, mg, radius_arr[k, index], eta_drive, integration_method, luminosity, mdg,
                                               dot_radius_arr[k, index], dotdot_radius_arr[k, index], mp, mdp, mddg, dot_rt_arr, radius_arr,
                                               dot_radius_arr, dotdot_radius_arr, k, index, dt)
-            # print(dotdot_radius_arr[k, index + 1], ' dotdot_radius_arr index + 1')
-            # print(dotdot_radius_arr[k, index ], ' dotdot_radius_arr index')
-            # print(dot_radius_arr[k, index + 1], ' dot_radius index + 1')
-            # print(dot_radius_arr[k, index ], ' dot_radius_arr index')
-            # print(radius_arr[k, index + 1], ' radius index + 1')
-            # print(radius_arr[k, index], 'radius index ')
 
-            # TODO implement clearing oscillations
+            # TODO do I need to implement clearing oscillations
             # if clear_oscillations:
 
             pressure_contact_arr[k, index] = 4. / 3. * (dot_radius ** 2) * rhogas2 * (
@@ -131,16 +102,11 @@ if __name__ == '__main__':
             # p2 = (mg * rdd + mdg * rd + mg * (mp + mg / 2.) / r ^ 2.) / (4 *!pi * r ^ 2.)  # ;pressure at the contact discontinuity
             # pres2[k, i] = p2
 
-            # print(pressure_contact_arr, ' pressure contact')
-            # print(pressure_outer_arr, ' pressure outer')
-
             index += 1
-            # can i write index >= TIMESTEPS
             if index >= len(radius_arr[0,]) - 1:
                 print(' timesteps')
                 is_main_loop = ending(is_main_loop)
 
-            # print(time_arr[k, index])
             if time_arr[k, index] >= TIME_MAX:
                 print('time')
                 is_main_loop = ending(is_main_loop)
@@ -148,8 +114,6 @@ if __name__ == '__main__':
             if radius_arr[k, index] >= RADIUS_MAX:
                 print('radiusmax')
                 is_main_loop = ending(is_main_loop)
-
-            # is_main_loop = False
 
     radius_arr = radius_arr * unit_kpc
     dot_radius = dot_radius * unit_velocity/1.e5
@@ -160,18 +124,10 @@ if __name__ == '__main__':
     mass_out_arr = mass_out_arr * unit_sunmass
     total_mass_arr = total_mass_arr * unit_sunmass
 
-    print(radius_arr[0, 20990:20999], ' arr, 0, 0-6')
-    print(radius_arr[0:4, 0], ' arr, 0-4, 0')
-    # print(dot_radius[0, 0:6], 'dot radius 0, 0-6') ??? wtf
-    # print(dot_radius[0:4, 0], 'dot radius 0-4, 0') ??
-    print(time_arr[0, 20990:20999], ' time 0, 0-6')
-    print(time_arr[0:4, 0], ' time 0-4, 0')
-    print(pressure_contact_arr, ' pres')
-    print(pressure_outer_arr, 'pres 2')
-    print(dot_mass_arr, ' dot mas')
-    print(mass_out_arr, ' mout')
-    print(total_mass_arr, ' total_mass')
+    exec_time = time.time()
+    print("exec time --- %s seconds ---" % (time.time() - start_time))
 
     plotting(time_arr, radius_arr, mass_out_arr, dot_mass_arr)
+    print("plot time --- %s seconds ---" % (time.time() - exec_time))
 
 
