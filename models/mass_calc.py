@@ -1,4 +1,4 @@
-# good naming? Or better dot_R, dotdot_R and add legend that R stands for radius?
+# TODO good naming? Or better dot_R, dotdot_R and add legend that R stands for radius?
 # r = radius r = rvals[0]
 # rdot = rvals[1] -> dot_radius
 # rddot = rvals[2] -> dotdot_radius
@@ -24,6 +24,7 @@ import math
 
 
 # TODO figure out correct names for variables from physics
+# TODO make this file readable
 
 def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profile, bulge_profile, disc_profile,
                      total_mass, virial_radius, halo_concentration_parameter, bulge_scale, disc_scale,
@@ -58,14 +59,6 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
                                                                                              dotdot_radius, halo_scale,
                                                                                              radius_scaled, radius)
 
-    # print(mt, ' mt')
-    # print(mdt, ' mdt')
-    # print(mddt)
-    # print(rho_halo)
-    # print(rho2_halo)
-    # print(phi_halo)
-    # print(phi_grad_halo, ' phigrad')
-
     bulge_disc_mass_member = 1 - bulge_disc_totalmass_fraction
     halo_gas_member = 1 - halo_gas_fraction
     bulge_halo_members = bulge_disc_mass_member * halo_gas_member
@@ -90,25 +83,14 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
 
     #
     mbb = bulge_totalmass * bulge_disc_totalmass_fraction * total_mass  # mbb - what's that?
-    # print(bulge_totalmass, ' bt')
-    # print(bulge_disc_totalmass_fraction, ' fbt')
-    # print(total_mass, ' mtot')
     bulge_scaled = radius / bulge_scale
 
     IsothermalBulgeProfile = Isothermal()
+    # TODO think how to write these in more readable way
     (mb, mdb, mddb, rho_bulge, rho2_bulge, phi_bulge, phi_grad_bulge) = IsothermalBulgeProfile.calculate(mbb, radius,
                                                                                                          dot_radius,
                                                                                                          dotdot_radius,
                                                                                                          bulge_scale)
-    # print(mb, ' mb')
-    # print(mdb, ' mdb')
-    # print(mddb, ' mddb')
-    # # print(rho_bulge, ' rhobulge')
-    # print('%.2E' % Decimal(rho_bulge), ' rhobulge')
-    # print(rho2_bulge)
-    # print(phi_bulge)
-    # print(phi_grad_bulge, ' phigradbulge')
-
     bulge_disc_gas_member = 1 - bulge_disc_gas_fraction
 
     mbp = mb * bulge_disc_gas_member
@@ -129,6 +111,7 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
     rhobgas = rho_bulge * bulge_disc_gas_fraction
     rhobgas2 = rho2_bulge * bulge_disc_gas_fraction
 
+    # TODO remove usage of my Calculator
     deltaphi = Calculator.multiply(4, math.pi, radius ** 2, (rhohgas + rhobgas), delta_radius,
                                    1 + delta_radius / radius + (delta_radius ** 2) / (3. * radius ** 2), phih + phib)
 

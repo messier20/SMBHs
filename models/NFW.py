@@ -1,6 +1,6 @@
 import math
 
-
+# TODO remove calculations from constructor and transfer it to calc_mass
 class NFW:
     def __init__(self, total_mass, radius_scaled, concentration):
         self.total_mass = total_mass

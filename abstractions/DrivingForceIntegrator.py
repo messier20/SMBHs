@@ -55,9 +55,9 @@ class DrivingForceIntegrator:
             radius_arr[k, index + 1] = radius + dot_radius * dt
         else:
             radius_arr[k, index + 1] = radius + dot_radius * dt + 0.5 * dotdot_radius * dt ** 2 + (1. / 6.) * dot_rt * dt ** 3
-        return radius_arr, dot_radius_arr, dot_radius, dotdot_radius
 
-    #     arrrtdot[k, i] = rtdot
+        return radius_arr, dot_radius_arr, dotdot_radius
+
     #     arrrddot[k, i + 1] = rdd + rtdot * dt
     #     arrrdot[k, i + 1] = rd + rdd * dt + 0.5 * rtdot * dt ^ 2.
     #     if arrrdot[k, i + 1] gt 2 * eta_dr * cc then begin

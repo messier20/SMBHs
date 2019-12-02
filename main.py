@@ -31,8 +31,7 @@ if __name__ == '__main__':
         dotdot_radius_arr[k, 0] = dotdot_radius
         delta_radius_arr[k, 0] = delta_radius
 
-        disc_mass = total_masses[k] * bulge_disc_totalmass_fractions[k] * (
-                1 - bulge_totalmasses[k]) * disc_gas_fractions[k]
+        disc_mass = total_masses[k] * bulge_disc_totalmass_fractions[k] * (1 - bulge_totalmasses[k]) * disc_gas_fractions[k]
 
         cooling_radius = 0.52 * math.sqrt(
             (bulge_disc_gas_fractions[k] / 0.16)) * 1.e-5 / unit_kpc  # cooling radius in kpc
@@ -86,7 +85,7 @@ if __name__ == '__main__':
 
             # ;SMBH growth and luminosity calculation ends
 
-            (radius_arr, dot_radius_arr, dot_radius, dotdot_radius) = \
+            (radius_arr, dot_radius_arr, dotdot_radius) = \
                 Integrator.driving_force_calc(driving_force, mg, radius_arr[k, index], eta_drive, integration_method, luminosity, mdg,
                                               dot_radius_arr[k, index], dotdot_radius_arr[k, index], mp, mdp, mddg, dot_rt_arr, radius_arr,
                                               dot_radius_arr, dotdot_radius_arr, k, index, dt)
@@ -94,10 +93,13 @@ if __name__ == '__main__':
             # TODO do I need to implement clearing oscillations
             # if clear_oscillations:
 
-            pressure_contact_arr[k, index] = 4. / 3. * (dot_radius ** 2) * rhogas2 * (
-                    1. - 1. / (5. * ((dot_radius / sigma) ** 2)))
-            pressure_outer_arr[k, index] = (mg * dotdot_radius + mdg * dot_radius + mg * (mp + mg / 2.) / (
-                    radius ** 2)) / (4 * math.pi * (radius ** 2))
+            # TODO implement this correctly
+            # pressure_contact_arr[k, index] = 4. / 3. * (dot_radius ** 2) * rhogas2 * (
+            #         1. - 1. / (5. * ((dot_radius / sigma) ** 2)))
+            # pressure_outer_arr[k, index] = (mg * dotdot_radius + mdg * dot_radius + mg * (mp + mg / 2.) / (
+            #         radius ** 2)) / (4 * math.pi * (radius ** 2))
+            # print(dot_radius, ' maybe wrong dot radius')
+
             # pres[k, i] = 4. / 3. * rd ^ 2. * rhogas2 * (1. - 1. / (5. * (rd / sigma) ^ 2.))  # ;pressure at the outer shock
             # p2 = (mg * rdd + mdg * rd + mg * (mp + mg / 2.) / r ^ 2.) / (4 *!pi * r ^ 2.)  # ;pressure at the contact discontinuity
             # pres2[k, i] = p2
@@ -116,10 +118,10 @@ if __name__ == '__main__':
                 is_main_loop = ending(is_main_loop)
 
     radius_arr = radius_arr * unit_kpc
-    dot_radius = dot_radius * unit_velocity/1.e5
+    dot_radius_arr = dot_radius_arr * unit_velocity/1.e5
     time_arr = time_arr * unit_year
-    pressure_contact_arr = pressure_contact_arr / unit_length / (unit_time ** 2)
-    pressure_outer_arr = pressure_outer_arr / unit_length / (unit_time ** 2)
+    # pressure_contact_arr = pressure_contact_arr / unit_length / (unit_time ** 2)
+    # pressure_outer_arr = pressure_outer_arr / unit_length / (unit_time ** 2)
     dot_mass_arr = dot_mass_arr * unit_sunmass / unit_year
     mass_out_arr = mass_out_arr * unit_sunmass
     total_mass_arr = total_mass_arr * unit_sunmass
