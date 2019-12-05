@@ -17,12 +17,17 @@ class DrivingForceIntegrator:
         # TODO figure physics meaning of this member
         mass_member = (mdg * mp + mg * mdp + mg * mdg) / radius
 
+
         if driving_force == DRIVING_FORCE.ENERGY_DRIVING:
+            # TODO vienu atveju, kad butu visas sitas vidus ifo, o kitu atveju, tik kad eta drive 0.05,
+            # (
             optical_depth = 0.348 / (unit_length ** 2) * unit_mass * mg / (4 * math.pi * (radius ** 2))
             if optical_depth < 1:
                 eta_drive = eta_drive * optical_depth
             if eta_drive < 0.05:
                 eta_drive = 0.05  # transition to energy-driven wind
+            # )
+            # Sitai daliai apskliaustai
 
             dot_rt = self.dot_rt_initial_calc(mg, radius, eta_drive, luminosity, mdg, dot_radius,
                                               dotdot_radius, mg_mp_member, mass_member, mddg)

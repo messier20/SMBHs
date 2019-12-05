@@ -4,10 +4,10 @@ import numpy as np
 from plots.PlotSetup import PlotSetup
 
 
-def plotting(time, radius, mass_out, dot_mass):
+def plotting_R_relation(time, radius, mass_out, dot_mass):
     path = '/home/monika/Documents/SMBHs/plots/'
     Plot = PlotSetup()
-    fig1, ax1 = Plot.setup()
+    fig1, ax1 = Plot.setup_R_rel()
     ax1.set_ylim(1.e-2, 1.e2)
     ax1.set_ylabel('radius [$kpc$]')
     p1 = ax1.scatter(time[0, ], radius[0, ], color='black', marker='.', linewidth=0.3, s=0.3)
@@ -20,7 +20,7 @@ def plotting(time, radius, mass_out, dot_mass):
     fig1.savefig(path + 'plot_threepart1_v4.png', bbox_inches='tight')
     plt.close(fig1)
 
-    fig2, ax2 = Plot.setup()
+    fig2, ax2 = Plot.setup_R_rel()
     ax2.set_ylim(1.e7, 1.e11)
     ax2.set_ylabel('Total mass in outflow [$M_{sun}$]')
     p1 = ax2.scatter(time[0, ], mass_out[0, ], color='black', marker='.', linewidth=0.3, s=0.3)
@@ -34,7 +34,7 @@ def plotting(time, radius, mass_out, dot_mass):
     fig2.savefig(path + 'plot_threepart2_v4.png', bbox_inches='tight')
     plt.close(fig2)
 
-    fig3, ax3 = Plot.setup()
+    fig3, ax3 = Plot.setup_R_rel()
     ax3.set_ylim(10, 1.e4)
     ax3.set_ylabel('Mass outflow rate [$M_{sun}yr^{-1}$]')
     p1 = ax3.scatter(time[0,], dot_mass[0,], color='black', marker='.', linewidth=0.3, s=0.3)

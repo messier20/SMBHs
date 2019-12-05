@@ -6,8 +6,11 @@ from input_parameters.switches import *
 from abstractions.DrivingForceIntegrator import DrivingForceIntegrator
 from models.mass_calc import mass_calculation
 from abstractions.FadeTypeSwitcher import FadeTypeSwitcher
-from plots.plotting import plotting
+from plots.plotting_LumAGN_relation import plotting_LumAGN_relation
+from plots.plotting_R_relation import plotting_R_relation
 import time
+
+from plots.plotting_histogram import plotting_histogram
 
 
 def ending(is_main_loop):
@@ -15,6 +18,8 @@ def ending(is_main_loop):
     is_main_loop = False
     print('Iteration number ', k, ' finished')
     return is_main_loop
+
+
 
 if __name__ == '__main__':
     start_time = time.time()
@@ -25,6 +30,8 @@ if __name__ == '__main__':
     for k in range(ITERATIONS_NUM):
         is_main_loop = True
         index = 0
+
+        smbh_mass = smbh_mass_init
 
         radius_arr[k, 0] = radius
         dot_radius_arr[k, 0] = dot_radius
@@ -74,14 +81,13 @@ if __name__ == '__main__':
                 time_eff = time_arr[k, index]
 
             luminosity_coef = FadeTypeSwitcher.calc_luminosity_coef(fade, time_eff, quasar_duration)
-            luminosity_edd = 1.3e38 * (smbh_masses[
-                                           k] * unit_mass / 1.989e33) * unit_time / unit_energy  # ;eddington luminosity for the current SMBH mass
+            luminosity_edd = 1.3e38 * (smbh_mass * unit_mass / 1.989e33) * unit_time / unit_energy  # ;eddington luminosity for the current SMBH mass
             luminosity = luminosity_coef * luminosity_edd
-            luminosity_arr[k, index + 1] = luminosity  # ;actual luminosity
+            luminosity_AGN_arr[k, index + 1] = luminosity  # ;actual luminosity
 
             # ;grow the SMBH
             if smbh_grows:
-                smbh_mass = smbh_masses[k] * math.exp(luminosity_coef * dt / salpeter_timescale)  # ;new BH mass
+                smbh_mass = smbh_mass * math.exp(luminosity_coef * dt / salpeter_timescale)  # ;new BH mass
 
             # ;SMBH growth and luminosity calculation ends
 
@@ -126,10 +132,14 @@ if __name__ == '__main__':
     mass_out_arr = mass_out_arr * unit_sunmass
     total_mass_arr = total_mass_arr * unit_sunmass
 
+
     exec_time = time.time()
     print("exec time --- %s seconds ---" % (time.time() - start_time))
 
-    plotting(time_arr, radius_arr, mass_out_arr, dot_mass_arr)
+    plotting_R_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr)
+    plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr)
+    # plotting_histogram(dot_radius_arr, dot_mass_arr)
+
     print("plot time --- %s seconds ---" % (time.time() - exec_time))
 
 

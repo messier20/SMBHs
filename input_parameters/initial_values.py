@@ -1,6 +1,6 @@
 from input_parameters.program_units import unit_kpc, unit_velocity
 import input_parameters.parameters as params
-
+# TODO add prefix init_ for all values
 dot_radius = 0
 radius = 0.001 / unit_kpc  # arrr[k, 0] = 0.001 / C.unit_kpc
 var = 100000.00000

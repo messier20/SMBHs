@@ -1,6 +1,6 @@
 from input_parameters.program_units import *
 from input_parameters.program_constants import *
-
+# TODO for non arrays parameters add init prefix
 total_mass = 1.e12 / unit_sunmass
 total_masses = [total_mass for i in range(0, ITERATIONS_NUM)]  # total virial mass of the galaxy
 virial_radius = 200 / unit_kpc
@@ -18,6 +18,9 @@ disc_gas_fractions = [0.8 for i in range(0, ITERATIONS_NUM)]  # gas fraction in 
 halo_concentration_parameters = [10 for i in range(0, ITERATIONS_NUM)]  # concentration parameter, only necessary for NFW halos
 
 # AGN parameters
+# tq_x = 5.d4/unityear   ;quasar duration
+# trep_x = 1.d6/unityear ;time between successive quasar phases
+
 quasar_dt = 1.e6 / unit_year
 quasar_dts = [quasar_dt for i in range(0, ITERATIONS_NUM)]  # ;time between successive quasar phases
 quasar_duration = 5.e4 / unit_year
@@ -26,6 +29,6 @@ quasar_durations = [quasar_duration for i in range(0, ITERATIONS_NUM)]  # ;quasa
 drop_timescale = 3.e5 / unit_year
 alpha_drop = 0.5
 eddingtion_ration = 1.  # ;(maximum) Eddington ratio
-smbh_mass = 3.e8 / unit_sunmass  # ;SMBH mass in Solar masses
-smbh_masses = [smbh_mass for i in range(0, ITERATIONS_NUM)]
+smbh_mass_init = 3.e8 / unit_sunmass  # ;SMBH mass in Solar masses
+smbh_masses = [smbh_mass_init for i in range(0, ITERATIONS_NUM)]
 salpeter_timescale = 4.5e8*RADIATIVE_EFFICIENCY_ETA/unit_year        #;SMBH growth timescale at Eddington rate - Salpeter timescale
