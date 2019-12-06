@@ -89,6 +89,7 @@ if __name__ == '__main__':
             if smbh_grows:
                 smbh_mass = smbh_mass * math.exp(luminosity_coef * dt / salpeter_timescale)  # ;new BH mass
 
+
             # ;SMBH growth and luminosity calculation ends
 
             (radius_arr, dot_radius_arr, dotdot_radius) = \
@@ -135,10 +136,11 @@ if __name__ == '__main__':
 
     exec_time = time.time()
     print("exec time --- %s seconds ---" % (time.time() - start_time))
+    # print(np.where(dot_radius_arr > 1000))
 
-    plotting_R_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr)
-    plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr)
-    # plotting_histogram(dot_radius_arr, dot_mass_arr)
+    # plotting_R_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr)
+    # plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr)
+    plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr)
 
     print("plot time --- %s seconds ---" % (time.time() - exec_time))
 
