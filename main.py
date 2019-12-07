@@ -7,7 +7,8 @@ from abstractions.DrivingForceIntegrator import DrivingForceIntegrator
 from models.mass_calc import mass_calculation
 from abstractions.FadeTypeSwitcher import FadeTypeSwitcher
 from plots.plotting_LumAGN_relation import plotting_LumAGN_relation
-from plots.plotting_R_relation import plotting_R_relation
+from plots.plotting_r_relation import plotting_r_relation
+from plots.plotting_time_relation import plotting_time_relation
 import time
 
 from plots.plotting_histogram import plotting_histogram
@@ -138,8 +139,9 @@ if __name__ == '__main__':
     print("exec time --- %s seconds ---" % (time.time() - start_time))
     # print(np.where(dot_radius_arr > 1000))
 
-    # plotting_R_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr)
-    # plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr)
+    plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr)
+    plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr)
+    # plotting_r_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr)
     plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr)
 
     print("plot time --- %s seconds ---" % (time.time() - exec_time))

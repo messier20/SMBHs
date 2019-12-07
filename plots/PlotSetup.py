@@ -3,7 +3,7 @@ class PlotSetup:
     def __init__(self):
         pass
 
-    def setup_R_rel(self):
+    def setup_time_rel(self):
         # fig, ax = plt.subplots()
         # ax.tick_params(axis='both', which='both', direction='in', top=True, right=True)
         fig, ax = self.setup_common_properties()
