@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr):
+def plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, index):
     path = '/home/monika/Documents/SMBHs/plots/'
 
     a = np.where(np.array(dot_radius_arr)>0, dot_radius_arr, float('nan'))
@@ -31,7 +31,7 @@ def plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr):
     # p5 = ax1.hist(a[4,], bins=100, color='yellow', alpha=0.5)
     # ax1.legend(ax1)
 
-    fig1.savefig(path + 'hist_v2.png', bbox_inches='tight')
+    fig1.savefig(path + 'hist_v2'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig1)
 
     b = np.where(np.array(a) < 360, a, float('nan'))
@@ -42,7 +42,7 @@ def plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr):
     ax2.hist([b[0,], b[1,], b[2,], b[3,], b[4,]], bins=600, histtype='stepfilled', color=colors, alpha=0.5,
              label=labels)
     ax2.legend(prop={'size': 10})
-    fig2.savefig(path + 'hist_zoomed_v1.png', bbox_inches='tight')
+    fig2.savefig(path + 'hist_zoomed_v1'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig2)
 
     fig3, ax3 = Plot.setup_common_properties()
@@ -51,7 +51,7 @@ def plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr):
     ax3.set_xlabel('velocity [$km/s$]')
     ax3.hist(a[0,], bins=600, histtype='stepfilled', color=colors[0], alpha=0.5, label=labels[0])
     ax3.legend(prop={'size': 10})
-    fig3.savefig(path + 'hist_vel_SMBHgrow_fg05.png', bbox_inches='tight')
+    fig3.savefig(path + 'hist_vel_SMBHgrow_fg05'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig3)
 
     fig4, ax4 = Plot.setup_common_properties()
@@ -60,7 +60,7 @@ def plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr):
     ax4.set_xlabel('velocity [$km/s$]')
     ax4.hist(a[1,], bins=600, histtype='stepfilled', color=colors[1], alpha=0.5, label=labels[1])
     ax4.legend(prop={'size': 10})
-    fig4.savefig(path + 'hist_vel_SMBHgrow_fg01.png', bbox_inches='tight')
+    fig4.savefig(path + 'hist_vel_SMBHgrow_fg01'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig4)
 
     fig5, ax5 = Plot.setup_common_properties()
@@ -69,7 +69,7 @@ def plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr):
     ax5.set_xlabel('velocity [$km/s$]')
     ax5.hist(a[2,], bins=600, histtype='stepfilled', color=colors[2], alpha=0.5, label=labels[2])
     ax5.legend(prop={'size': 10})
-    fig5.savefig(path + 'hist_vel_SMBHgrow_fg025.png', bbox_inches='tight')
+    fig5.savefig(path + 'hist_vel_SMBHgrow_fg025'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig5)
 
     fig6, ax6 = Plot.setup_common_properties()
@@ -78,7 +78,7 @@ def plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr):
     ax6.set_xlabel('velocity [$km/s$]')
     ax6.hist(a[3,], bins=600, histtype='stepfilled', color=colors[3], alpha=0.5, label=labels[3])
     ax6.legend(prop={'size': 10})
-    fig6.savefig(path + 'hist_vel_SMBHgrow_fg05.png', bbox_inches='tight')
+    fig6.savefig(path + 'hist_vel_SMBHgrow_fg05'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig6)
 
     fig7, ax7 = Plot.setup_common_properties()
@@ -87,7 +87,7 @@ def plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr):
     ax7.set_xlabel('velocity [$km/s$]')
     ax7.hist(a[4,], bins=600, histtype='stepfilled', color=colors[4], alpha=0.5, label=labels[4])
     ax7.legend(prop={'size': 10})
-    fig7.savefig(path + 'hist_vel_SMBHgrow_fg1.png', bbox_inches='tight')
+    fig7.savefig(path + 'hist_vel_SMBHgrow_fg1'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig7)
 
 
@@ -100,5 +100,5 @@ def plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr):
     ax1.hist([dot_mass_nozero[0,], dot_mass_nozero[1,], dot_mass_nozero[2,], dot_mass_nozero[3,], dot_mass_nozero[4,]], bins=800, histtype='stepfilled', color=colors, alpha=0.5,
              label=labels)
 
-    fig1.savefig(path + 'hist_dmass_SMBHgrow_dmass_more_than6_less3500.png', bbox_inches='tight')
+    fig1.savefig(path + 'hist_dmass_SMBHgrow_dmass_more_than6_less3500'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig1)
