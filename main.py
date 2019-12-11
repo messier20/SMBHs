@@ -46,8 +46,9 @@ if __name__ == '__main__':
             dotdot_radius_arr[k, 0] = dotdot_radius
             delta_radius_arr[k, 0] = delta_radius
 
-            #
+            #mhalo = mtot*(1-fbt)
             # mbulge = mtot * fbt * bt
+            mass_halo = total_masses[k] * (1 - bulge_disc_totalmass_fraction)
             mass_bulge = total_masses[k] * bulge_disc_totalmass_fraction * bulge_totalmasses[k]
             disc_mass = total_masses[k] * bulge_disc_totalmass_fraction * (1 - bulge_totalmasses[k]) * \
                         disc_gas_fractions[k]

@@ -4,17 +4,19 @@ from input_parameters.program_constants import *
 total_mass = 1.e13 / unit_sunmass
 # total_mass = 1.e12 / unit_sunmass
 total_masses = [total_mass for i in range(0, ITERATIONS_NUM)]  # total virial mass of the galaxy
-virial_radius = 138.10558496091766321489 / unit_kpc
+# virial_radius = 138.10558496091766321489 / unit_kpc
 # virial_radius = 200 / unit_kpc
+virial_radius_1 = 626* (((total_mass/(10**13))*unit_sunmass)**(1/3))
+virial_radius = virial_radius_1 / unit_kpc
 virial_radiuses = [virial_radius for i in range(0, ITERATIONS_NUM)]  # ;virial radius in kpc
 # bulge_disc_totalmass_fractions = [0.4 for i in range(0, ITERATIONS_NUM)]  # fraction of total mass in the bulge+disc system
-bulge_disc_totalmass_fractions = [0.01, 0.03, 0.05, 0.075, 0.1]
+bulge_disc_totalmass_fractions = [0.002, 0.003, 0.0065, 0.01, 0.03]
 
 halo_gas_fraction = 1.e-3  # gas fraction in the halo
 bulge_disc_gas_fractions = [0.05, 0.1, 0.25, 0.5, 1.]  # gas fraction in the bulge+disc
 
 # TODO how to understand bulge-to-total mass
-bulge_totalmasses = [0.1 for i in range(0, ITERATIONS_NUM)]  # bulge-to-total mass ratio
+bulge_totalmasses = [1 for i in range(0, ITERATIONS_NUM)]  # bulge-to-total mass ratio
 
 disc_gas_fractions = [0.8 for i in range(0, ITERATIONS_NUM)]  # gas fraction in the disc
 
