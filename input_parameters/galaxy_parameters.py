@@ -1,11 +1,14 @@
 from input_parameters.program_units import *
 from input_parameters.program_constants import *
 # TODO for non arrays parameters add init prefix
-total_mass = 1.e12 / unit_sunmass
+total_mass = 1.e13 / unit_sunmass
+# total_mass = 1.e12 / unit_sunmass
 total_masses = [total_mass for i in range(0, ITERATIONS_NUM)]  # total virial mass of the galaxy
-virial_radius = 200 / unit_kpc
+virial_radius = 138.10558496091766321489 / unit_kpc
+# virial_radius = 200 / unit_kpc
 virial_radiuses = [virial_radius for i in range(0, ITERATIONS_NUM)]  # ;virial radius in kpc
-bulge_disc_totalmass_fractions = [0.4 for i in range(0, ITERATIONS_NUM)]  # fraction of total mass in the bulge+disc system
+# bulge_disc_totalmass_fractions = [0.4 for i in range(0, ITERATIONS_NUM)]  # fraction of total mass in the bulge+disc system
+bulge_disc_totalmass_fractions = [0.01, 0.03, 0.05, 0.075, 0.1]
 
 halo_gas_fraction = 1.e-3  # gas fraction in the halo
 bulge_disc_gas_fractions = [0.05, 0.1, 0.25, 0.5, 1.]  # gas fraction in the bulge+disc
@@ -23,7 +26,7 @@ halo_concentration_parameters = [10 for i in range(0, ITERATIONS_NUM)]  # concen
 
 quasar_dt = 1.e6 / unit_year
 quasar_dts = [quasar_dt for i in range(0, ITERATIONS_NUM)]  # ;time between successive quasar phases
-quasar_duration = 5.e4 / unit_year
+quasar_duration = 5.e9 / unit_year
 quasar_durations = [quasar_duration for i in range(0, ITERATIONS_NUM)]  # ;quasar duration
 
 drop_timescale = 3.e5 / unit_year

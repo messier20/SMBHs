@@ -118,4 +118,4 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
     sigma = math.sqrt(mt * bulge_disc_mass_member + mb / 2 / radius)
 
     return mhp + mbp, mdhp + mdbp, mhg + mbg, mdhg + mdbg, mddhg + mddbg, rhohgas + rhobgas, sigma, deltaphi, phih + \
-           phib, phigradh + phigradb, rhohgas2 + rhobgas2
+           phib, phigradh + phigradb, rhohgas2 + rhobgas2, mb

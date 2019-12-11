@@ -6,6 +6,7 @@ from plots.PlotSetup import PlotSetup
 
 def plotting_r_relation(radius, dot_radius, mass_out, dot_mass, index):
     path = '/home/monika/Documents/SMBHs/plots/'
+    name = 'nongrow_quasar_alltime_fbtVar_'
     Plot = PlotSetup()
 
     fig1, ax1 = Plot.setup_common_properties()
@@ -23,5 +24,5 @@ def plotting_r_relation(radius, dot_radius, mass_out, dot_mass, index):
     p5 = ax1.scatter(radius[4,], dot_radius[4,], color='yellow', marker='.', linewidth=0.3, s=0.3)
 
     Plot.add_legend_gas_fractions(ax1, p1, p2, p3, p4, p5)
-    fig1.savefig(path + 'plot_radius_dot_radius_v1_'+str(index)+'.png', bbox_inches='tight')
+    fig1.savefig(path + name + 'plot_radius_dot_radius_v1_'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig1)

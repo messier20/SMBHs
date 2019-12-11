@@ -27,12 +27,14 @@ if __name__ == '__main__':
     start_time = time.time()
 
     path = '/home/monika/Documents/SMBHs/results/'
+    name = 'fbt_v1'
 
     FadeTypeSwitcher = FadeTypeSwitcher()
     Integrator = DrivingForceIntegrator()
 
     for out_index in range(ITERATIONS_NUM):
         loop_time = time.time()
+        bulge_disc_totalmass_fraction = bulge_disc_totalmass_fractions[out_index]
         for k in range(ITERATIONS_NUM):
             is_main_loop = True
             index = 0
@@ -44,7 +46,10 @@ if __name__ == '__main__':
             dotdot_radius_arr[k, 0] = dotdot_radius
             delta_radius_arr[k, 0] = delta_radius
 
-            disc_mass = total_masses[k] * bulge_disc_totalmass_fractions[k] * (1 - bulge_totalmasses[k]) * \
+            #
+            # mbulge = mtot * fbt * bt
+            mass_bulge = total_masses[k] * bulge_disc_totalmass_fraction * bulge_totalmasses[k]
+            disc_mass = total_masses[k] * bulge_disc_totalmass_fraction * (1 - bulge_totalmasses[k]) * \
                         disc_gas_fractions[k]
 
             cooling_radius = 0.52 * math.sqrt(
@@ -53,17 +58,18 @@ if __name__ == '__main__':
             while is_main_loop:  # main loop, ends when one of the ending conditions is reached -
                 # either number of timesteps, time or outflow radius pass a threshold
 
-                (mp, mdp, mg, mdg, mddg, rhogas, sigma, deltaphi, phi, phigrad, rhogas2) = \
+                (mp, mdp, mg, mdg, mddg, rhogas, sigma, deltaphi, phi, phigrad, rhogas2, mb) = \
                     mass_calculation(radius_arr[k, index], dot_radius_arr[k, index], dotdot_radius_arr[k, index],
                                      delta_radius_arr[k, index], halo_profile, bulge_profile,
                                      disc_profile, total_masses[k], virial_radiuses[k],
                                      halo_concentration_parameters[k],
-                                     bulge_scale, disc_scale, bulge_disc_totalmass_fractions[k],
+                                     bulge_scale, disc_scale, bulge_disc_totalmass_fraction,
                                      halo_gas_fraction, bulge_disc_gas_fractions[k], bulge_totalmasses[k])
 
                 mass_out_arr[k, index] = mg
                 total_mass_arr[k, index] = mg + mp
                 dot_mass_arr[k, index] = mdg
+                bulge_mass_arr[k, index] = mb
 
                 # ;this sets the timestep with 'Courant' criterion 0.1. In fact, this is
                 # ;a little sloppy, since we should set the timestep after calculating
@@ -145,25 +151,33 @@ if __name__ == '__main__':
         total_mass_arr = total_mass_arr * unit_sunmass
 
 
+        # mine
+        bulge_mass_arr = bulge_mass_arr * unit_sunmass
+
+
         # TODO maybe switch order
         # df = pd.DataFrame(np.array(radius_arr).transpose())
         radius_df = pd.DataFrame(radius_arr)
-        radius_df.to_csv(str(path)+'radius'+str(out_index)+'.csv')
+        radius_df.to_csv(str(path) + name +'radius'+str(out_index)+'.csv')
 
         dot_radius_df = pd.DataFrame(dot_radius_arr)
-        dot_radius_df.to_csv(str(path) + 'dot_Radius' + str(out_index) + '.csv')
+        dot_radius_df.to_csv(str(path)+ name  + 'dot_Radius' + str(out_index) + '.csv')
 
         time_df = pd.DataFrame(time_arr)
-        time_df.to_csv(str(path) + 'time' + str(out_index) + '.csv')
+        time_df.to_csv(str(path) + name + 'time' + str(out_index) + '.csv')
 
         dot_mass_df = pd.DataFrame(dot_mass_arr)
-        dot_mass_df.to_csv(str(path) + 'dot_mass' + str(out_index) + '.csv')
+        dot_mass_df.to_csv(str(path) + name + 'dot_mass' + str(out_index) + '.csv')
 
         tot_mass_df = pd.DataFrame(total_mass_arr)
-        tot_mass_df.to_csv(str(path) + 'tot_mass' + str(out_index) + '.csv')
+        tot_mass_df.to_csv(str(path) + name + 'tot_mass' + str(out_index) + '.csv')
 
         out_mass_df = pd.DataFrame(mass_out_arr)
-        out_mass_df.to_csv(str(path) + 'out_mass' + str(out_index) + '.csv')
+        out_mass_df.to_csv(str(path) + name + 'out_mass' + str(out_index) + '.csv')
+
+        print(bulge_mass_arr)
+        print(mass_bulge)
+        print(mass_bulge*unit_sunmass)
 
 
 

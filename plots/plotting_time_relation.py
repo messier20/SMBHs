@@ -6,6 +6,7 @@ from plots.PlotSetup import PlotSetup
 
 def plotting_time_relation(time, radius, mass_out, dot_mass, index):
     path = '/home/monika/Documents/SMBHs/plots/'
+    name = 'nongrow_quasar_alltime_fbtVar_'
     Plot = PlotSetup()
     fig1, ax1 = Plot.setup_time_rel()
     ax1.set_ylim(1.e-2, 1.e2)
@@ -17,7 +18,7 @@ def plotting_time_relation(time, radius, mass_out, dot_mass, index):
     p5 = ax1.scatter(time[4,], radius[4,], color='yellow', marker='.', linewidth=0.3, s=0.3)
     #
     ax1.legend((p1, p2, p3, p4, p5), (r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1'), markerscale=10)
-    fig1.savefig(path + 'plot_threepart1_v5'+str(index)+'.png', bbox_inches='tight')
+    fig1.savefig(path + name + 'plot_threepart1_v5'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig1)
 
     fig2, ax2 = Plot.setup_time_rel()
@@ -31,7 +32,7 @@ def plotting_time_relation(time, radius, mass_out, dot_mass, index):
 
     ax2.legend((p1, p2, p3, p4, p5), (r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1'),
                markerscale=10)
-    fig2.savefig(path + 'plot_threepart2_v5'+str(index)+'.png', bbox_inches='tight')
+    fig2.savefig(path + name + 'plot_threepart2_v5'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig2)
 
     fig3, ax3 = Plot.setup_time_rel()
@@ -45,7 +46,7 @@ def plotting_time_relation(time, radius, mass_out, dot_mass, index):
 
     ax3.legend((p1, p2, p3, p4, p5), (r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1'),
                markerscale=10)
-    fig3.savefig(path + 'plot_threepart3_v5'+str(index)+'.png', bbox_inches='tight')
+    fig3.savefig(path + name + 'plot_threepart3_v5'+str(index)+'.png', bbox_inches='tight')
     plt.close(fig3)
 
 
