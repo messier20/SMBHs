@@ -17,11 +17,9 @@ from plots.plotting_histogram import plotting_histogram
 
 
 def ending(is_main_loop):
-    start_time = time.time()
     is_main_loop = False
     print('Iteration number ', k, ' finished')
     return is_main_loop
-
 
 
 if __name__ == '__main__':
@@ -29,7 +27,6 @@ if __name__ == '__main__':
 
     params_path = '/home/monika/Documents/SMBHs/results/output_values/'
     values_version_folder = 'v' + str(version) + '/'
-    # plots_version_folder = ''
     try:
         os.mkdir(params_path + values_version_folder)
     except:
@@ -187,7 +184,6 @@ if __name__ == '__main__':
         print(bulge_mass_arr)
         print(mass_bulge)
         print(mass_bulge*unit_sunmass)
-
 
 
         exec_time = time.time()

@@ -39,10 +39,11 @@ smbh_masses = [smbh_mass_init for i in range(0, ITERATIONS_NUM)]
 salpeter_timescale = 4.5e8*RADIATIVE_EFFICIENCY_ETA/unit_year        #;SMBH growth timescale at Eddington rate - Salpeter timescale
 
 bulge_masses = [2.e10, 3.e10, 6.5e10, 1.e11, 3.e11]
-# gautas yra puse, tai reikia padaugint is dvieju
 bulge_scale = []
 for bulge_mass in bulge_masses:
+    # I'm using theoretical formula times 2
     bulge_scale.append((((bulge_mass/1.e11)**0.88)*2.4*2 / unit_kpc))
-# bulge_scale = [(((bulge_mass/10.e11)**0.88)*2.4*2 / unit_kpc) for bulge_mass in bulge_masses]
-# bulge_scale = 138.10558496091766321489 / unit_kpc
+
+print(bulge_scale)
+
 disc_scale = 3 / unit_kpc  # ;scale length of disc in kpc
