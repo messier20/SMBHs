@@ -21,7 +21,7 @@ leapfrog_dkd = 0
 leapfrog_kdk = 0
 ######
 
-smbh_grows = True                                 #toggle whether SMBH grows
+smbh_grows = False                                 #toggle whether SMBH grows
 # repeating = 1.                          #toggle whether quasar outbursts repeat themselves
 repeating_equation = True
 

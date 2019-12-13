@@ -17,5 +17,6 @@ unit_year = unit_time/3.15e7
 unit_sunmass = unit_mass / 1.989e33
 
 # bulge_scale = 1 / unit_kpc  # ;scale radius of bulge in kpc
-bulge_scale = 138.10558496091766321489 / unit_kpc
-disc_scale = 3 / unit_kpc  # ;scale length of disc in kpc
+# # gautas yra puse, tai reikia padaugint is dvieju
+# bulge_scale = 138.10558496091766321489 / unit_kpc
+# disc_scale = 3 / unit_kpc  # ;scale length of disc in kpc

@@ -64,7 +64,7 @@ if __name__ == '__main__':
                                      delta_radius_arr[k, index], halo_profile, bulge_profile,
                                      disc_profile, total_masses[k], virial_radiuses[k],
                                      halo_concentration_parameters[k],
-                                     bulge_scale, disc_scale, bulge_disc_totalmass_fraction,
+                                     bulge_scale[k], disc_scale, bulge_disc_totalmass_fraction,
                                      halo_gas_fraction, bulge_disc_gas_fractions[k], bulge_totalmasses[k])
 
                 mass_out_arr[k, index] = mg

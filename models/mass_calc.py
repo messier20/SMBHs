@@ -59,29 +59,30 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
                                                                                              dotdot_radius, halo_scale,
                                                                                              radius_scaled, radius)
 
-    bulge_disc_mass_member = 1 - bulge_disc_totalmass_fraction
-    halo_gas_member = 1 - halo_gas_fraction
-    bulge_halo_members = bulge_disc_mass_member * halo_gas_member
+    fraction_of_galaxy_in_halo = 1 - bulge_disc_totalmass_fraction
+    halo_non_gass_fraction = 1 - halo_gas_fraction
+    dark_matter_fraction_in_halo = fraction_of_galaxy_in_halo * halo_non_gass_fraction
 
-    mhp = mt * bulge_halo_members
-    mdhp = mdt * bulge_halo_members
-    mddhp = mddt * bulge_halo_members
-    phihp = phi_halo * bulge_halo_members
-    phigradhp = phi_grad_halo * bulge_halo_members
+    # p-potential, tai kas ne dujos
+    mhp = mt * dark_matter_fraction_in_halo
+    mdhp = mdt * dark_matter_fraction_in_halo
+    mddhp = mddt * dark_matter_fraction_in_halo
+    phihp = phi_halo * dark_matter_fraction_in_halo #gravitacinis potencialas
+    phigradhp = phi_grad_halo * dark_matter_fraction_in_halo
 
-    mhg = mt * bulge_disc_mass_member * halo_gas_fraction
-    mdhg = mdt * bulge_disc_mass_member * halo_gas_fraction
-    mddhg = mddt * bulge_disc_mass_member * halo_gas_fraction
-    phihg = phi_halo * bulge_disc_mass_member * halo_gas_fraction / 2
-    phigradhg = phi_grad_halo * bulge_disc_mass_member * halo_gas_fraction / 2
+    mhg = mt * fraction_of_galaxy_in_halo * halo_gas_fraction
+    mdhg = mdt * fraction_of_galaxy_in_halo * halo_gas_fraction
+    mddhg = mddt * fraction_of_galaxy_in_halo * halo_gas_fraction
+    phihg = phi_halo * fraction_of_galaxy_in_halo * halo_gas_fraction / 2
+    phigradhg = phi_grad_halo * fraction_of_galaxy_in_halo * halo_gas_fraction / 2
 
     phih = phihp + phihg
     phigradh = phigradhp + phigradhg
 
-    rhohgas = rho_halo * bulge_disc_mass_member * halo_gas_fraction
-    rhohgas2 = rho2_halo * bulge_disc_mass_member * halo_gas_fraction
+    rhohgas = rho_halo * fraction_of_galaxy_in_halo * halo_gas_fraction
+    rhohgas2 = rho2_halo * fraction_of_galaxy_in_halo * halo_gas_fraction
 
-    #
+    # bulge mass
     mbb = bulge_totalmass * bulge_disc_totalmass_fraction * total_mass  # mbb - what's that?
     bulge_scaled = radius / bulge_scale
 
@@ -89,8 +90,10 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
     # TODO think how to write these in more readable way
     (mb, mdb, mddb, rho_bulge, rho2_bulge, phi_bulge, phi_grad_bulge) = IsothermalBulgeProfile.calculate(mbb, radius,
                                                                                                          dot_radius,
+
                                                                                                          dotdot_radius,
                                                                                                          bulge_scale)
+    # mb bulgo mases dalis nuo centro iki dabartinio r
     bulge_disc_gas_member = 1 - bulge_disc_gas_fraction
 
     mbp = mb * bulge_disc_gas_member
@@ -112,10 +115,11 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
     rhobgas2 = rho2_bulge * bulge_disc_gas_fraction
 
     # TODO remove usage of my Calculator
+    # gravitacinio potencialo pokytis
     deltaphi = Calculator.multiply(4, math.pi, radius ** 2, (rhohgas + rhobgas), delta_radius,
                                    1 + delta_radius / radius + (delta_radius ** 2) / (3. * radius ** 2), phih + phib)
 
-    sigma = math.sqrt(mt * bulge_disc_mass_member + mb / 2 / radius)
+    sigma = math.sqrt(mt * fraction_of_galaxy_in_halo + mb / 2 / radius)
 
     return mhp + mbp, mdhp + mdbp, mhg + mbg, mdhg + mdbg, mddhg + mddbg, rhohgas + rhobgas, sigma, deltaphi, phih + \
            phib, phigradh + phigradb, rhohgas2 + rhobgas2, mb
