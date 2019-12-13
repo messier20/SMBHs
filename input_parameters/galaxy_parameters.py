@@ -44,6 +44,5 @@ bulge_scale = []
 for bulge_mass in bulge_masses:
     bulge_scale.append((((bulge_mass/1.e11)**0.88)*2.4*2 / unit_kpc))
 # bulge_scale = [(((bulge_mass/10.e11)**0.88)*2.4*2 / unit_kpc) for bulge_mass in bulge_masses]
-print(bulge_scale)
 # bulge_scale = 138.10558496091766321489 / unit_kpc
 disc_scale = 3 / unit_kpc  # ;scale length of disc in kpc

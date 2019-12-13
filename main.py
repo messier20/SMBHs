@@ -11,6 +11,7 @@ from plots.plotting_r_relation import plotting_r_relation
 from plots.plotting_time_relation import plotting_time_relation
 import time
 import pandas as pd
+import os
 
 from plots.plotting_histogram import plotting_histogram
 
@@ -26,8 +27,15 @@ def ending(is_main_loop):
 if __name__ == '__main__':
     start_time = time.time()
 
-    path = '/home/monika/Documents/SMBHs/results/'
-    name = 'fbt_v1'
+    params_path = '/home/monika/Documents/SMBHs/results/output_values/'
+    values_version_folder = 'v' + str(version) + '/'
+    # plots_version_folder = ''
+    try:
+        os.mkdir(params_path + values_version_folder)
+    except:
+        pass
+
+    params_output_name = values_version_folder +'fbt_v2'
 
     FadeTypeSwitcher = FadeTypeSwitcher()
     Integrator = DrivingForceIntegrator()
@@ -158,23 +166,23 @@ if __name__ == '__main__':
 
         # TODO maybe switch order
         # df = pd.DataFrame(np.array(radius_arr).transpose())
-        radius_df = pd.DataFrame(radius_arr)
-        radius_df.to_csv(str(path) + name +'radius'+str(out_index)+'.csv')
+        radius_df = pd.DataFrame(np.array(radius_arr).transpose())
+        radius_df.to_csv(str(params_path) + params_output_name + 'radius' + str(out_index) + '.csv')
 
-        dot_radius_df = pd.DataFrame(dot_radius_arr)
-        dot_radius_df.to_csv(str(path)+ name  + 'dot_Radius' + str(out_index) + '.csv')
+        dot_radius_df = pd.DataFrame(np.array(dot_radius_arr).transpose())
+        dot_radius_df.to_csv(str(params_path) + params_output_name + 'dot_Radius' + str(out_index) + '.csv')
 
-        time_df = pd.DataFrame(time_arr)
-        time_df.to_csv(str(path) + name + 'time' + str(out_index) + '.csv')
+        time_df = pd.DataFrame(np.array(time_arr).transpose())
+        time_df.to_csv(str(params_path) + params_output_name + 'time' + str(out_index) + '.csv')
 
-        dot_mass_df = pd.DataFrame(dot_mass_arr)
-        dot_mass_df.to_csv(str(path) + name + 'dot_mass' + str(out_index) + '.csv')
+        dot_mass_df = pd.DataFrame(np.array(dot_mass_arr).transpose())
+        dot_mass_df.to_csv(str(params_path) + params_output_name + 'dot_mass' + str(out_index) + '.csv')
 
-        tot_mass_df = pd.DataFrame(total_mass_arr)
-        tot_mass_df.to_csv(str(path) + name + 'tot_mass' + str(out_index) + '.csv')
+        tot_mass_df = pd.DataFrame(np.array(total_mass_arr).transpose())
+        tot_mass_df.to_csv(str(params_path) + params_output_name + 'tot_mass' + str(out_index) + '.csv')
 
-        out_mass_df = pd.DataFrame(mass_out_arr)
-        out_mass_df.to_csv(str(path) + name + 'out_mass' + str(out_index) + '.csv')
+        out_mass_df = pd.DataFrame(np.array(mass_out_arr).transpose())
+        out_mass_df.to_csv(str(params_path) + params_output_name + 'out_mass' + str(out_index) + '.csv')
 
         print(bulge_mass_arr)
         print(mass_bulge)
@@ -185,6 +193,9 @@ if __name__ == '__main__':
         exec_time = time.time()
         print("exec time --- %s seconds ---" % (time.time() - loop_time))
         # print(np.where(dot_radius_arr > 1000))
+
+        radius_more_than_10_arr = np.array(np.where(radius_arr > 10))
+        test_arr = dot_radius_arr[np.where(radius_arr >= 10)]
 
         plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr,out_index)
         plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr,out_index)
