@@ -1,7 +1,8 @@
 from input_parameters.program_units import unit_kpc, unit_velocity
 import input_parameters.parameters as params
 
-version = 1
+version = 1.1
+model_type = ['mb20', 'mb30', 'mb65', 'mb100', 'mb300']
 
 # TODO maybe add prefix init_ for all values
 dot_radius = 0

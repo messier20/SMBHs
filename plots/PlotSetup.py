@@ -24,6 +24,13 @@ class PlotSetup:
 
         return fig, ax
 
+    def setup_histogram(self, model_name):
+        fig, ax = self.setup_common_properties()
+        ax.set_ylabel('count')
+        ax.set_title(model_name + '$x10^{9}$')
+
+        return fig, ax
+
     def add_legend_gas_fractions(self, ax, *lines):
         return ax.legend(lines,
                    (r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1'),

@@ -2,9 +2,9 @@ from plots.PlotSetup import PlotSetup
 import matplotlib.pyplot as plt
 from plots.plots_settings import *
 
-def plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr, index):
+def plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr, index, type_name):
     # graphs_path = '/home/monika/Documents/SMBHs/plots/'
-    name = plots_version_folder +'nongrow_quasar_alltime_fbtVar_'
+    name = plots_version_folder +'nongrow_quasar_alltime_fbtVar_'  + type_name
     Plot = PlotSetup()
     fig1, ax1 = Plot.setup_LAGN_rel()
     ax1.set_ylim(0.e0, 3.e3)

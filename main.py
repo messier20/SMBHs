@@ -156,6 +156,17 @@ if __name__ == '__main__':
         mass_out_arr = mass_out_arr * unit_sunmass
         total_mass_arr = total_mass_arr * unit_sunmass
 
+        radius_more_than_10_arr = np.where(radius_arr > 0.01, radius_arr, np.nan)
+        dot_radius_reduced_arr = np.where(radius_arr > 0.01, dot_radius_arr, np.nan)
+        # dot_radius_reduced_arr.shape = dot_radius_arr.shape
+        radius_df = pd.DataFrame(np.array(dot_radius_reduced_arr).transpose())
+        radius_df.to_csv(str(params_path) + params_output_name + 'test' + str(out_index) + '.csv')
+        time_reduced_arr = np.where(radius_arr > 0.01, time_arr, np.nan)
+        dot_mass_reduced_arr = np.where(radius_arr > 0.01, dot_mass_arr, np.nan)
+        mass_out_reduced_arr = np.where(radius_arr > 0.01, mass_out_arr, np.nan)
+        total_mass_reduced_arr = np.where(radius_arr > 0.01, total_mass_arr, np.nan)
+        luminosity_AGN_reduced_arr = np.where(radius_arr > 0.01, luminosity_AGN_arr, np.nan)
+
 
         # mine
         bulge_mass_arr = bulge_mass_arr * unit_sunmass
@@ -164,39 +175,37 @@ if __name__ == '__main__':
         # TODO maybe switch order
         # df = pd.DataFrame(np.array(radius_arr).transpose())
         radius_df = pd.DataFrame(np.array(radius_arr).transpose())
-        radius_df.to_csv(str(params_path) + params_output_name + 'radius' + str(out_index) + '.csv')
+        radius_df.to_csv(str(params_path) + params_output_name + 'radius' + model_type[out_index] + '.csv')
 
         dot_radius_df = pd.DataFrame(np.array(dot_radius_arr).transpose())
-        dot_radius_df.to_csv(str(params_path) + params_output_name + 'dot_Radius' + str(out_index) + '.csv')
+        dot_radius_df.to_csv(str(params_path) + params_output_name + 'dot_Radius' + model_type[out_index] + '.csv')
 
         time_df = pd.DataFrame(np.array(time_arr).transpose())
-        time_df.to_csv(str(params_path) + params_output_name + 'time' + str(out_index) + '.csv')
+        time_df.to_csv(str(params_path) + params_output_name + 'time' + model_type[out_index] + '.csv')
 
         dot_mass_df = pd.DataFrame(np.array(dot_mass_arr).transpose())
-        dot_mass_df.to_csv(str(params_path) + params_output_name + 'dot_mass' + str(out_index) + '.csv')
+        dot_mass_df.to_csv(str(params_path) + params_output_name + 'dot_mass' + model_type[out_index] + '.csv')
 
         tot_mass_df = pd.DataFrame(np.array(total_mass_arr).transpose())
-        tot_mass_df.to_csv(str(params_path) + params_output_name + 'tot_mass' + str(out_index) + '.csv')
+        tot_mass_df.to_csv(str(params_path) + params_output_name + 'tot_mass' + model_type[out_index] + '.csv')
 
         out_mass_df = pd.DataFrame(np.array(mass_out_arr).transpose())
-        out_mass_df.to_csv(str(params_path) + params_output_name + 'out_mass' + str(out_index) + '.csv')
-
-        print(bulge_mass_arr)
-        print(mass_bulge)
-        print(mass_bulge*unit_sunmass)
+        out_mass_df.to_csv(str(params_path) + params_output_name + 'out_mass' + model_type[out_index] + '.csv')
 
 
         exec_time = time.time()
         print("exec time --- %s seconds ---" % (time.time() - loop_time))
         # print(np.where(dot_radius_arr > 1000))
 
-        radius_more_than_10_arr = np.array(np.where(radius_arr > 10))
-        test_arr = dot_radius_arr[np.where(radius_arr >= 10)]
+        plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
+        # plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
+        plotting_r_relation(radius_arr, dot_radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
+        plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, model_type[out_index], ' _nongrow_')
 
-        plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr,out_index)
-        plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr,out_index)
-        plotting_r_relation(radius_arr,dot_radius_arr, mass_out_arr, dot_mass_arr, out_index)
-        plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, out_index)
+        plotting_time_relation(time_reduced_arr, radius_more_than_10_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than1pc_')
+        # plotting_LumAGN_relation(luminosity_AGN_reduced_arr, dot_radius_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than1pc_')
+        plotting_r_relation(radius_more_than_10_arr,dot_radius_reduced_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than1pc_')
+        plotting_histogram(dot_radius_reduced_arr, dot_mass_reduced_arr, time_reduced_arr, model_type[out_index], ' _nongrow_more_than1pc_')
 
         print("plot time --- %s seconds ---" % (time.time() - exec_time))
 
