@@ -23,6 +23,7 @@ def ending(is_main_loop):
 
 
 if __name__ == '__main__':
+    np.seterr(divide='ignore', invalid='ignore')
     start_time = time.time()
 
     params_path = '/home/monika/Documents/SMBHs/results/output_values/'
@@ -156,20 +157,22 @@ if __name__ == '__main__':
         mass_out_arr = mass_out_arr * unit_sunmass
         total_mass_arr = total_mass_arr * unit_sunmass
 
-        radius_more_than_10_arr = np.where(radius_arr > 0.01, radius_arr, np.nan)
-        dot_radius_reduced_arr = np.where(radius_arr > 0.01, dot_radius_arr, np.nan)
+        # mine
+        bulge_mass_arr = bulge_mass_arr * unit_sunmass
+        observed_time_arr = radius_arr / dot_radius_arr
+
+        radius_more_than_10_arr = np.where(radius_arr > 0.2, radius_arr, np.nan)
+        dot_radius_reduced_arr = np.where(radius_arr > 0.2, dot_radius_arr, np.nan)
         # dot_radius_reduced_arr.shape = dot_radius_arr.shape
         radius_df = pd.DataFrame(np.array(dot_radius_reduced_arr).transpose())
         radius_df.to_csv(str(params_path) + params_output_name + 'test' + str(out_index) + '.csv')
-        time_reduced_arr = np.where(radius_arr > 0.01, time_arr, np.nan)
-        dot_mass_reduced_arr = np.where(radius_arr > 0.01, dot_mass_arr, np.nan)
-        mass_out_reduced_arr = np.where(radius_arr > 0.01, mass_out_arr, np.nan)
-        total_mass_reduced_arr = np.where(radius_arr > 0.01, total_mass_arr, np.nan)
-        luminosity_AGN_reduced_arr = np.where(radius_arr > 0.01, luminosity_AGN_arr, np.nan)
+        time_reduced_arr = np.where(radius_arr > 0.2, time_arr, np.nan)
+        dot_mass_reduced_arr = np.where(radius_arr > 0.2, dot_mass_arr, np.nan)
+        mass_out_reduced_arr = np.where(radius_arr > 0.2, mass_out_arr, np.nan)
+        total_mass_reduced_arr = np.where(radius_arr > 0.2, total_mass_arr, np.nan)
+        luminosity_AGN_reduced_arr = np.where(radius_arr > 0.2, luminosity_AGN_arr, np.nan)
+        observed_time_reduced_arr = np.where(radius_arr > 0.2, observed_time_arr, np.nan)
 
-
-        # mine
-        bulge_mass_arr = bulge_mass_arr * unit_sunmass
 
 
         # TODO maybe switch order
@@ -197,15 +200,15 @@ if __name__ == '__main__':
         print("exec time --- %s seconds ---" % (time.time() - loop_time))
         # print(np.where(dot_radius_arr > 1000))
 
-        plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
+        plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr, observed_time_arr, model_type[out_index], ' _nongrow_')
         # plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
-        plotting_r_relation(radius_arr, dot_radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
-        plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, model_type[out_index], ' _nongrow_')
+        # plotting_r_relation(radius_arr, dot_radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
+        # plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, model_type[out_index], ' _nongrow_')
 
-        plotting_time_relation(time_reduced_arr, radius_more_than_10_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than1pc_')
-        # plotting_LumAGN_relation(luminosity_AGN_reduced_arr, dot_radius_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than1pc_')
-        plotting_r_relation(radius_more_than_10_arr,dot_radius_reduced_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than1pc_')
-        plotting_histogram(dot_radius_reduced_arr, dot_mass_reduced_arr, time_reduced_arr, model_type[out_index], ' _nongrow_more_than1pc_')
+        plotting_time_relation(time_reduced_arr, radius_more_than_10_arr, mass_out_reduced_arr, dot_mass_reduced_arr, observed_time_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
+        plotting_LumAGN_relation(luminosity_AGN_reduced_arr, dot_radius_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
+        plotting_r_relation(radius_more_than_10_arr,dot_radius_reduced_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
+        plotting_histogram(dot_radius_reduced_arr, dot_mass_reduced_arr, time_reduced_arr, model_type[out_index], ' _nongrow_more_than20pc_')
 
         print("plot time --- %s seconds ---" % (time.time() - exec_time))
 
