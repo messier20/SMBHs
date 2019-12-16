@@ -10,7 +10,7 @@ virial_radius_1 = 626* (((total_mass/(10**13))*unit_sunmass)**(1/3))
 virial_radius = virial_radius_1 / unit_kpc
 virial_radiuses = [virial_radius for i in range(0, ITERATIONS_NUM)]  # ;virial radius in kpc
 # bulge_disc_totalmass_fractions = [0.4 for i in range(0, ITERATIONS_NUM)]  # fraction of total mass in the bulge+disc system
-bulge_disc_totalmass_fractions = [0.002, 0.003, 0.007, 0.01, 0.03]
+bulge_disc_totalmass_fractions = [0.002, 0.003, 0.004, 0.005, 0.006, 0.007, 0.008, 0.009, 0.01, 0.02, 0.03]
 
 halo_gas_fraction = 1.e-3  # gas fraction in the halo
 bulge_disc_gas_fractions = [0.05, 0.1, 0.25, 0.5, 1.]  # gas fraction in the bulge+disc
@@ -28,7 +28,7 @@ halo_concentration_parameters = [10 for i in range(0, ITERATIONS_NUM)]  # concen
 
 quasar_dt = 1.e6 / unit_year
 quasar_dts = [quasar_dt for i in range(0, ITERATIONS_NUM)]  # ;time between successive quasar phases
-quasar_duration = 5.e9 / unit_year
+quasar_duration = 5.e10 / unit_year
 quasar_durations = [quasar_duration for i in range(0, ITERATIONS_NUM)]  # ;quasar duration
 
 drop_timescale = 3.e5 / unit_year
@@ -38,7 +38,7 @@ smbh_mass_init = 3.e8 / unit_sunmass  # ;SMBH mass in Solar masses
 smbh_masses = [smbh_mass_init for i in range(0, ITERATIONS_NUM)]
 salpeter_timescale = 4.5e8*RADIATIVE_EFFICIENCY_ETA/unit_year        #;SMBH growth timescale at Eddington rate - Salpeter timescale
 
-bulge_masses = [2.e10, 3.e10, 7.e10, 1.e11, 3.e11]
+bulge_masses = [2.e10, 3.e10, 4.e10, 5.e10, 6.e10, 7.e10, 8.e10, 9.e10,  1.e11, 2.e11, 3.e11]
 bulge_scales = []
 for bulge_mass in bulge_masses:
     # I'm using theoretical formula times 2

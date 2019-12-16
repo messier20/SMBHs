@@ -38,7 +38,7 @@ if __name__ == '__main__':
     FadeTypeSwitcher = FadeTypeSwitcher()
     Integrator = DrivingForceIntegrator()
 
-    for out_index in range(ITERATIONS_NUM):
+    for out_index in range(len(bulge_disc_totalmass_fractions)):
         loop_time = time.time()
         bulge_disc_totalmass_fraction = bulge_disc_totalmass_fractions[out_index]
         print(bulge_scales)
@@ -163,17 +163,15 @@ if __name__ == '__main__':
         bulge_mass_arr = bulge_mass_arr * unit_sunmass
         observed_time_arr = radius_arr / dot_radius_arr
 
-        radius_more_than_10_arr = np.where(radius_arr > 0.2, radius_arr, np.nan)
-        dot_radius_reduced_arr = np.where(radius_arr > 0.2, dot_radius_arr, np.nan)
+        radius_more_than_20_arr = np.where(radius_arr > 0.02, radius_arr, np.nan)
+        dot_radius_reduced_arr = np.where(radius_arr > 0.02, dot_radius_arr, np.nan)
         # dot_radius_reduced_arr.shape = dot_radius_arr.shape
-        radius_df = pd.DataFrame(np.array(dot_radius_reduced_arr).transpose())
-        radius_df.to_csv(str(params_path) + params_output_name + 'test' + str(out_index) + '.csv')
-        time_reduced_arr = np.where(radius_arr > 0.2, time_arr, np.nan)
-        dot_mass_reduced_arr = np.where(radius_arr > 0.2, dot_mass_arr, np.nan)
-        mass_out_reduced_arr = np.where(radius_arr > 0.2, mass_out_arr, np.nan)
-        total_mass_reduced_arr = np.where(radius_arr > 0.2, total_mass_arr, np.nan)
-        luminosity_AGN_reduced_arr = np.where(radius_arr > 0.2, luminosity_AGN_arr, np.nan)
-        observed_time_reduced_arr = np.where(radius_arr > 0.2, observed_time_arr, np.nan)
+        time_reduced_arr = np.where(radius_arr > 0.02, time_arr, np.nan)
+        dot_mass_reduced_arr = np.where(radius_arr > 0.02, dot_mass_arr, np.nan)
+        mass_out_reduced_arr = np.where(radius_arr > 0.02, mass_out_arr, np.nan)
+        total_mass_reduced_arr = np.where(radius_arr > 0.02, total_mass_arr, np.nan)
+        luminosity_AGN_reduced_arr = np.where(radius_arr > 0.02, luminosity_AGN_arr, np.nan)
+        observed_time_reduced_arr = np.where(radius_arr > 0.02, observed_time_arr, np.nan)
 
 
 
@@ -204,12 +202,12 @@ if __name__ == '__main__':
 
         # plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr, observed_time_arr, model_type[out_index], ' _nongrow_')
         # plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
-        # plotting_r_relation(radius_arr, dot_radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
+        plotting_r_relation(radius_arr, dot_radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
         # plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, model_type[out_index], ' _nongrow_')
 
-        plotting_time_relation(time_reduced_arr, radius_more_than_10_arr, mass_out_reduced_arr, dot_mass_reduced_arr, observed_time_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
+        plotting_time_relation(time_reduced_arr, radius_more_than_20_arr, mass_out_reduced_arr, dot_mass_reduced_arr, observed_time_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
         # plotting_LumAGN_relation(luminosity_AGN_reduced_arr, dot_radius_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
-        plotting_r_relation(radius_more_than_10_arr,dot_radius_reduced_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
+        plotting_r_relation(radius_more_than_20_arr,dot_radius_reduced_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
         # plotting_histogram(dot_radius_reduced_arr, dot_mass_reduced_arr, time_reduced_arr, model_type[out_index], ' _nongrow_more_than20pc_')
 
         print("plot time --- %s seconds ---" % (time.time() - exec_time))
