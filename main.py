@@ -41,6 +41,8 @@ if __name__ == '__main__':
     for out_index in range(ITERATIONS_NUM):
         loop_time = time.time()
         bulge_disc_totalmass_fraction = bulge_disc_totalmass_fractions[out_index]
+        print(bulge_scales)
+        bulge_scale = bulge_scales[out_index]
         for k in range(ITERATIONS_NUM):
             is_main_loop = True
             index = 0
@@ -70,7 +72,7 @@ if __name__ == '__main__':
                                      delta_radius_arr[k, index], halo_profile, bulge_profile,
                                      disc_profile, total_masses[k], virial_radiuses[k],
                                      halo_concentration_parameters[k],
-                                     bulge_scale[k], disc_scale, bulge_disc_totalmass_fraction,
+                                     bulge_scale, disc_scale, bulge_disc_totalmass_fraction,
                                      halo_gas_fraction, bulge_disc_gas_fractions[k], bulge_totalmasses[k])
 
                 mass_out_arr[k, index] = mg
@@ -200,15 +202,15 @@ if __name__ == '__main__':
         print("exec time --- %s seconds ---" % (time.time() - loop_time))
         # print(np.where(dot_radius_arr > 1000))
 
-        plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr, observed_time_arr, model_type[out_index], ' _nongrow_')
+        # plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr, observed_time_arr, model_type[out_index], ' _nongrow_')
         # plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
         # plotting_r_relation(radius_arr, dot_radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
         # plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, model_type[out_index], ' _nongrow_')
 
         plotting_time_relation(time_reduced_arr, radius_more_than_10_arr, mass_out_reduced_arr, dot_mass_reduced_arr, observed_time_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
-        plotting_LumAGN_relation(luminosity_AGN_reduced_arr, dot_radius_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
+        # plotting_LumAGN_relation(luminosity_AGN_reduced_arr, dot_radius_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
         plotting_r_relation(radius_more_than_10_arr,dot_radius_reduced_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
-        plotting_histogram(dot_radius_reduced_arr, dot_mass_reduced_arr, time_reduced_arr, model_type[out_index], ' _nongrow_more_than20pc_')
+        # plotting_histogram(dot_radius_reduced_arr, dot_mass_reduced_arr, time_reduced_arr, model_type[out_index], ' _nongrow_more_than20pc_')
 
         print("plot time --- %s seconds ---" % (time.time() - exec_time))
 
