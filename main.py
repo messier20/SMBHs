@@ -207,7 +207,7 @@ if __name__ == '__main__':
         plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr, observed_time_arr, model_type[out_index], ' _nongrow_')
         # plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
         plotting_r_relation(radius_arr, dot_radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
-        # plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, model_type[out_index], ' _nongrow_')
+        plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, model_type[out_index], ' _nongrow_')
 
         # plotting_time_relation(time_reduced_arr, radius_more_than_20_arr, mass_out_reduced_arr, dot_mass_reduced_arr, observed_time_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
         # plotting_LumAGN_relation(luminosity_AGN_reduced_arr, dot_radius_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
