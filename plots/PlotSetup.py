@@ -8,7 +8,7 @@ class PlotSetup:
         # ax.tick_params(axis='both', which='both', direction='in', top=True, right=True)
         fig, ax = self.setup_common_properties()
 
-        ax.set_xlim(1e4, 1e8)
+        # ax.set_xlim(1e4, 1e8)
         ax.set_yscale('log')
         ax.set_xscale('log')
         ax.set_xlabel('time [$yr$]')

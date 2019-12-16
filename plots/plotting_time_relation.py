@@ -8,7 +8,7 @@ def plotting_time_relation(time, radius, mass_out, dot_mass, observed_time, inde
     # graphs_path = '/home/monika/Documents/SMBHs/plots/'
     Plot = PlotSetup()
     fig1, ax1 = Plot.setup_time_rel()
-    ax1.set_ylim(1.e-2, 1.e2)
+    # ax1.set_ylim(1.e-2, 1.e2)
     ax1.set_ylabel('radius [$kpc$]')
     p1 = ax1.scatter(time[0, ], radius[0, ], color='black', marker='.', linewidth=0.3, s=0.3)
     p2 = ax1.scatter(time[1, ], radius[1, ], color='b', marker='.', linewidth=0.3, s=0.3)
@@ -21,7 +21,7 @@ def plotting_time_relation(time, radius, mass_out, dot_mass, observed_time, inde
     plt.close(fig1)
 
     fig2, ax2 = Plot.setup_time_rel()
-    ax2.set_ylim(1.e7, 1.e11)
+    # ax2.set_ylim(1.e7, 1.e11)
     ax2.set_ylabel('Total mass in outflow [$M_{sun}$]')
     p1 = ax2.scatter(time[0, ], mass_out[0, ], color='black', marker='.', linewidth=0.3, s=0.3)
     p2 = ax2.scatter(time[1,], mass_out[1,], color='b', marker='.', linewidth=0.3, s=0.3)
@@ -35,7 +35,7 @@ def plotting_time_relation(time, radius, mass_out, dot_mass, observed_time, inde
     plt.close(fig2)
 
     fig3, ax3 = Plot.setup_time_rel()
-    ax3.set_ylim(10, 1.e4)
+    # ax3.set_ylim(10, 1.e4)
     ax3.set_ylabel('Mass outflow rate [$M_{sun}yr^{-1}$]')
     p1 = ax3.scatter(time[0,], dot_mass[0,], color='black', marker='.', linewidth=0.3, s=0.3)
     p2 = ax3.scatter(time[1,], dot_mass[1,], color='b', marker='.', linewidth=0.3, s=0.3)
@@ -50,7 +50,7 @@ def plotting_time_relation(time, radius, mass_out, dot_mass, observed_time, inde
 
     # obs_time = radius/dot_radius
     fig3, ax3 = Plot.setup_common_properties()
-    ax3.set_ylim(10, 1.e4)
+    # ax3.set_ylim(10, 1.e4)
     ax3.set_ylabel('Mass outflow rate [$M_{sun}yr^{-1}$]')
     ax3.set_xlabel('observed time kpc/km/s')
     p1 = ax3.scatter(observed_time[0,], dot_mass[0,], color='black', marker='.', linewidth=0.3, s=0.3)

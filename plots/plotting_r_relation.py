@@ -12,6 +12,8 @@ def plotting_r_relation(radius, dot_radius, mass_out, dot_mass, model_type, type
     # ax1.set_ylim(1.e-2, 1.e2)
     ax1.set_ylabel('velocity [$km/s$]')
     ax1.set_xlabel('radius [$kpc$]')
+    ax1.set_yscale('log')
+    ax1.set_xscale('log')
     p1 = ax1.scatter(radius[0,], dot_radius[0,], color='black', marker='.', linewidth=0.3, s=0.3)
     p2 = ax1.scatter(radius[1,], dot_radius[1,], color='b', marker='.', linewidth=0.3, s=0.3)
     p3 = ax1.scatter(radius[2,], dot_radius[2,], color='g', marker='.', linewidth=0.3, s=0.3)
@@ -26,6 +28,8 @@ def plotting_r_relation(radius, dot_radius, mass_out, dot_mass, model_type, type
     fig2, ax2 = Plot.setup_common_properties()
     ax2.set_ylabel('Mass outflow rate [$M_{sun}yr^{-1}$]')
     ax2.set_xlabel('radius [$kpc$]')
+    ax2.set_yscale('log')
+    # ax2.set_xscale('log')
 
     p1 = ax2.scatter(radius[0,], dot_mass[0,], color='black', marker='.', linewidth=0.3, s=0.3)
     p2 = ax2.scatter(radius[1,], dot_mass[1,], color='b', marker='.', linewidth=0.3, s=0.3)
@@ -43,6 +47,8 @@ def plotting_r_relation(radius, dot_radius, mass_out, dot_mass, model_type, type
     ax3.set_ylabel('Mass outflow [$M_{sun}}$]')
     ax3.set_xlabel('radius [$kpc$]')
 
+    ax3.set_yscale('log')
+    ax3.set_xscale('log')
     p1 = ax3.scatter(radius[0,], mass_out[0,], color='black', marker='.', linewidth=0.3, s=0.3)
     p2 = ax3.scatter(radius[1,], mass_out[1,], color='b', marker='.', linewidth=0.3, s=0.3)
     p3 = ax3.scatter(radius[2,], mass_out[2,], color='g', marker='.', linewidth=0.3, s=0.3)

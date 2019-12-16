@@ -17,6 +17,7 @@
 # bt = num_params[8] -> bulge_totalmass
 from decimal import Decimal
 
+from input_parameters.program_units import unit_sunmass, unit_year
 from models.Isothermal import Isothermal
 from models.NFW import NFW
 from models.ProfileFormulas import ProfileFormulas
@@ -120,6 +121,8 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
                                    1 + delta_radius / radius + (delta_radius ** 2) / (3. * radius ** 2), phih + phib)
 
     sigma = math.sqrt(mt * fraction_of_galaxy_in_halo + mb / 2 / radius)
+    if(((mdhg + mdbg)* unit_sunmass / unit_year) > 11000):
+        print('woops')
 
     return mhp + mbp, mdhp + mdbp, mhg + mbg, mdhg + mdbg, mddhg + mddbg, rhohgas + rhobgas, sigma, deltaphi, phih + \
            phib, phigradh + phigradb, rhohgas2 + rhobgas2, mb
