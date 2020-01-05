@@ -11,6 +11,8 @@ def plotting_r_relation(radius, dot_radius, mass_out, dot_mass, model_type, type
     labels = [r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1']
     colors = ['black', 'b', 'g', 'r', 'orange']
 
+# ?    p1, p2, p3, p4, p5, p6 = np.nan
+
     fig1, ax1 = Plot.setup_common_properties()
     ax1.set_ylim(1.e2, 1.e4)
     ax1.set_xlim((3.e-2, 6.e1))

@@ -89,7 +89,7 @@ if __name__ == '__main__':
                 # ;the expected acceleration, but since r, rdot, rddot, rtdot do not
                 # ;change very significantly between timesteps, this is fine
 
-                dot_t1 = (radius_arr[k, index] + 1.e-8) / (radius_arr[k, index] + 1.e-8)
+                dot_t1 = (radius_arr[k, index] + 1.e-8) / (dot_radius_arr[k, index] + 1.e-8)
                 dot_t2 = (dot_radius_arr[k, index] + 1.e-8) / (dotdot_radius_arr[k, index] + 1.e-8)
                 dot_t3 = (dotdot_radius_arr[k, index] + 1.e-8) / (dot_rt_arr[k, index] + 1.e-8)
 
