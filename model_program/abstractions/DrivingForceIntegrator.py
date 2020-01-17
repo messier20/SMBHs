@@ -62,7 +62,7 @@ class DrivingForceIntegrator:
         else:
             radius_arr[k, index + 1] = radius + dot_radius * dt + 0.5 * dotdot_radius * dt ** 2 + (1. / 6.) * dot_rt * dt ** 3
 
-        return radius_arr, dot_radius_arr, dotdot_radius
+        return radius_arr, dot_radius_arr, dotdot_radius, dot_rt_arr
 
     #     arrrddot[k, i + 1] = rdd + rtdot * dt
     #     arrrdot[k, i + 1] = rd + rdd * dt + 0.5 * rtdot * dt ^ 2.

@@ -25,7 +25,7 @@ if __name__ == '__main__':
     np.seterr(divide='ignore', invalid='ignore')
     start_time = time.time()
 
-    params_path = "model_program/results/output_values/"
+    params_path = "C:/Users/Monika/PycharmProjects/SMBHs/model_program/results/output_values/"
     values_version_folder = 'v' + str(version) + '/'
     try:
         os.mkdir(params_path + values_version_folder)
@@ -118,7 +118,7 @@ if __name__ == '__main__':
 
                 # ;SMBH growth and luminosity calculation ends
 
-                (radius_arr, dot_radius_arr, dotdot_radius) = \
+                (radius_arr, dot_radius_arr, dotdot_radius, dot_rt_arr) = \
                     Integrator.driving_force_calc(driving_force, mg, radius_arr[k, index], eta_drive,
                                                   integration_method, luminosity, mdg,
                                                   dot_radius_arr[k, index], dotdot_radius_arr[k, index], mp, mdp, mddg,
@@ -166,37 +166,59 @@ if __name__ == '__main__':
         bulge_mass_arr = bulge_mass_arr * unit_sunmass
         observed_time_arr = radius_arr / dot_radius_arr
 
-        # radius_more_than_20_arr = np.where(radius_arr > 0.02, radius_arr, np.nan)
-        # dot_radius_reduced_arr = np.where(radius_arr > 0.02, dot_radius_arr, np.nan)
-        # # dot_radius_reduced_arr.shape = dot_radius_arr.shape
-        # time_reduced_arr = np.where(radius_arr > 0.02, time_arr, np.nan)
-        # dot_mass_reduced_arr = np.where(radius_arr > 0.02, dot_mass_arr, np.nan)
-        # mass_out_reduced_arr = np.where(radius_arr > 0.02, mass_out_arr, np.nan)
-        # total_mass_reduced_arr = np.where(radius_arr > 0.02, total_mass_arr, np.nan)
-        # luminosity_AGN_reduced_arr = np.where(radius_arr > 0.02, luminosity_AGN_arr, np.nan)
-        # observed_time_reduced_arr = np.where(radius_arr > 0.02, observed_time_arr, np.nan)
+        radius_more_than_20_arr = np.where(radius_arr > 0.02, radius_arr, np.nan)
+        dot_radius_reduced_arr = np.where(radius_arr > 0.02, dot_radius_arr, np.nan)
+        # dot_radius_reduced_arr.shape = dot_radius_arr.shape
+        time_reduced_arr = np.where(radius_arr > 0.02, time_arr, np.nan)
+        dot_mass_reduced_arr = np.where(radius_arr > 0.02, dot_mass_arr, np.nan)
+        mass_out_reduced_arr = np.where(radius_arr > 0.02, mass_out_arr, np.nan)
+        total_mass_reduced_arr = np.where(radius_arr > 0.02, total_mass_arr, np.nan)
+        luminosity_AGN_reduced_arr = np.where(radius_arr > 0.02, luminosity_AGN_arr, np.nan)
+        observed_time_reduced_arr = np.where(radius_arr > 0.02, observed_time_arr, np.nan)
 
+        radius_df = pd.DataFrame(np.array(radius_more_than_20_arr).transpose())
+        radius_df.to_csv((str(params_path) + params_output_name + 'radius' + model_type[out_index] + '.csv'),
+                         header=False, index=False)
 
+        dot_radius_df = pd.DataFrame(np.array(dot_radius_reduced_arr).transpose())
+        dot_radius_df.to_csv(str(params_path) + params_output_name + 'dot_Radius' + model_type[out_index] + '.csv',
+                             header=False, index=False)
+
+        time_df = pd.DataFrame(np.array(time_reduced_arr).transpose())
+        time_df.to_csv(str(params_path) + params_output_name + 'time' + model_type[out_index] + '.csv', header=False,
+                       index=False)
+
+        dot_mass_df = pd.DataFrame(np.array(dot_mass_reduced_arr).transpose())
+        dot_mass_df.to_csv(str(params_path) + params_output_name + 'dot_mass' + model_type[out_index] + '.csv',
+                           header=False, index=False)
+
+        tot_mass_df = pd.DataFrame(np.array(total_mass_reduced_arr).transpose())
+        tot_mass_df.to_csv(str(params_path) + params_output_name + 'tot_mass' + model_type[out_index] + '.csv',
+                           header=False, index=False)
+
+        out_mass_df = pd.DataFrame(np.array(mass_out_reduced_arr).transpose())
+        out_mass_df.to_csv(str(params_path) + params_output_name + 'out_mass' + model_type[out_index] + '.csv',
+                           header=False, index=False)
 
         # TODO maybe switch order
         # df = pd.DataFrame(np.array(radius_arr).transpose())
-        radius_df = pd.DataFrame(np.array(radius_arr).transpose())
-        radius_df.to_csv(str(params_path) + params_output_name + 'radius' + model_type[out_index] + '.csv')
-
-        dot_radius_df = pd.DataFrame(np.array(dot_radius_arr).transpose())
-        dot_radius_df.to_csv(str(params_path) + params_output_name + 'dot_Radius' + model_type[out_index] + '.csv')
-
-        time_df = pd.DataFrame(np.array(time_arr).transpose())
-        time_df.to_csv(str(params_path) + params_output_name + 'time' + model_type[out_index] + '.csv')
-
-        dot_mass_df = pd.DataFrame(np.array(dot_mass_arr).transpose())
-        dot_mass_df.to_csv(str(params_path) + params_output_name + 'dot_mass' + model_type[out_index] + '.csv')
-
-        tot_mass_df = pd.DataFrame(np.array(total_mass_arr).transpose())
-        tot_mass_df.to_csv(str(params_path) + params_output_name + 'tot_mass' + model_type[out_index] + '.csv')
-
-        out_mass_df = pd.DataFrame(np.array(mass_out_arr).transpose())
-        out_mass_df.to_csv(str(params_path) + params_output_name + 'out_mass' + model_type[out_index] + '.csv')
+        # radius_df = pd.DataFrame(np.array(radius_arr).transpose())
+        # radius_df.to_csv((str(params_path) + params_output_name + 'radius' + model_type[out_index] + '.csv'), header=False, index=False)
+        #
+        # dot_radius_df = pd.DataFrame(np.array(dot_radius_arr).transpose())
+        # dot_radius_df.to_csv(str(params_path) + params_output_name + 'dot_Radius' + model_type[out_index] + '.csv', header=False, index=False)
+        #
+        # time_df = pd.DataFrame(np.array(time_arr).transpose())
+        # time_df.to_csv(str(params_path) + params_output_name + 'time' + model_type[out_index] + '.csv', header=False, index=False)
+        #
+        # dot_mass_df = pd.DataFrame(np.array(dot_mass_arr).transpose())
+        # dot_mass_df.to_csv(str(params_path) + params_output_name + 'dot_mass' + model_type[out_index] + '.csv', header=False, index=False)
+        #
+        # tot_mass_df = pd.DataFrame(np.array(total_mass_arr).transpose())
+        # tot_mass_df.to_csv(str(params_path) + params_output_name + 'tot_mass' + model_type[out_index] + '.csv', header=False, index=False)
+        #
+        # out_mass_df = pd.DataFrame(np.array(mass_out_arr).transpose())
+        # out_mass_df.to_csv(str(params_path) + params_output_name + 'out_mass' + model_type[out_index] + '.csv', header=False, index=False)
 
 
         exec_time = time.time()
