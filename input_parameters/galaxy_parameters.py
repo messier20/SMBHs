@@ -38,7 +38,7 @@ smbh_mass_init = 3.e8 / unit_sunmass  # ;SMBH mass in Solar masses
 smbh_masses = [smbh_mass_init for i in range(0, ITERATIONS_NUM)]
 salpeter_timescale = 4.5e8*RADIATIVE_EFFICIENCY_ETA/unit_year        #;SMBH growth timescale at Eddington rate - Salpeter timescale
 
-bulge_masses = [2.e10, 3.e10, 4.e10, 5.e10, 6.e10, 7.e10, 8.e10, 9.e10,  1.e11, 2.e11, 3.e11]
+bulge_masses = [2.e10, 3.e10, 4.e10, 5.e10, 6.e10, 7.e10, 8.e10, 9.e10, 1.e11, 2.e11, 3.e11]
 bulge_scales = []
 for bulge_mass in bulge_masses:
     # I'm using theoretical formula times 2

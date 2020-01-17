@@ -21,7 +21,7 @@ def plotting_r_relation(radius, dot_radius, mass_out, dot_mass, model_type, type
     ax1.set_yscale('log')
     ax1.set_xscale('log')
     p1 = ax1.scatter(radius[0,], dot_radius[0,], color=colors[0], marker='.', linewidth=0.3, s=0.4)
-    p2 = ax1.scatter(radius[1,], dot_radius[1,], color=colors[0], marker='.', linewidth=0.3, s=0.4)
+    p2 = ax1.scatter(radius[1,], dot_radius[1,], color=colors[1], marker='.', linewidth=0.3, s=0.4)
     p3 = ax1.scatter(radius[2,], dot_radius[2,], color=colors[2], marker='.', linewidth=0.3, s=0.4)
     p4 = ax1.scatter(radius[3,], dot_radius[3,], color=colors[3], marker='.', linewidth=0.3, s=0.4)
     p5 = ax1.scatter(radius[4,], dot_radius[4,], color=colors[4], marker='.', linewidth=0.3, s=0.4)
@@ -35,7 +35,7 @@ def plotting_r_relation(radius, dot_radius, mass_out, dot_mass, model_type, type
     ax2.set_ylabel('Mass outflow rate [$M_{sun}yr^{-1}$]')
     ax2.set_xlabel('radius [$kpc$]')
     ax2.set_yscale('log')
-    # ax2.set_xscale('log')
+    ax2.set_xscale('log')
     # ax1.set_xlim((1.e-3, 1.e2))
     ax2.set_ylim(1.e-1, 2.e4)
 
@@ -56,6 +56,7 @@ def plotting_r_relation(radius, dot_radius, mass_out, dot_mass, model_type, type
     ax3.set_xlabel('radius [$kpc$]')
 
     ax3.set_yscale('log')
+    ax3.set_xscale('log')
     ax3.set_ylim(1.e8, 1.e13)
     # ax3.set_xscale('log')
     # ax1.set_xlim((1.e-3, 1.e2))

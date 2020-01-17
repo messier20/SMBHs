@@ -26,7 +26,7 @@ if __name__ == '__main__':
     np.seterr(divide='ignore', invalid='ignore')
     start_time = time.time()
 
-    params_path = '/home/monika/Documents/SMBHs/results/output_values/'
+    params_path = 'C:/Users/Monika/PycharmProjects/SMBHs/results/output_values/'
     values_version_folder = 'v' + str(version) + '/'
     try:
         os.mkdir(params_path + values_version_folder)
@@ -45,7 +45,6 @@ if __name__ == '__main__':
         dot_rt_arr, time_arr, dot_time_arr, luminosity_AGN_arr, pressure_contact_arr, pressure_outer_arr, bulge_mass_arr) =init_zero_arrays()
 
         bulge_disc_totalmass_fraction = bulge_disc_totalmass_fractions[out_index]
-        print(bulge_scales)
         bulge_scale = bulge_scales[out_index]
         for k in range(ITERATIONS_NUM):
             is_main_loop = True
@@ -119,7 +118,7 @@ if __name__ == '__main__':
 
                 # ;SMBH growth and luminosity calculation ends
 
-                (radius_arr, dot_radius_arr, dotdot_radius) = \
+                (radius_arr, dot_radius_arr, dotdot_radius, dot_rt_arr) = \
                     Integrator.driving_force_calc(driving_force, mg, radius_arr[k, index], eta_drive,
                                                   integration_method, luminosity, mdg,
                                                   dot_radius_arr[k, index], dotdot_radius_arr[k, index], mp, mdp, mddg,
@@ -153,7 +152,7 @@ if __name__ == '__main__':
                     print('radiusmax')
                     is_main_loop = ending(is_main_loop)
 
-
+        observed_time_arr = (radius_arr / dot_radius_arr) * unit_year
         radius_arr = radius_arr * unit_kpc
         dot_radius_arr = dot_radius_arr * unit_velocity/1.e5
         time_arr = time_arr * unit_year
@@ -165,17 +164,17 @@ if __name__ == '__main__':
 
         # mine
         bulge_mass_arr = bulge_mass_arr * unit_sunmass
-        observed_time_arr = radius_arr / dot_radius_arr
+        # observed_time_arr = radius_arr / (dot_radius_arr * 1.02269032 * (10**(-9)))
 
-        # radius_more_than_20_arr = np.where(radius_arr > 0.02, radius_arr, np.nan)
-        # dot_radius_reduced_arr = np.where(radius_arr > 0.02, dot_radius_arr, np.nan)
-        # # dot_radius_reduced_arr.shape = dot_radius_arr.shape
-        # time_reduced_arr = np.where(radius_arr > 0.02, time_arr, np.nan)
-        # dot_mass_reduced_arr = np.where(radius_arr > 0.02, dot_mass_arr, np.nan)
-        # mass_out_reduced_arr = np.where(radius_arr > 0.02, mass_out_arr, np.nan)
-        # total_mass_reduced_arr = np.where(radius_arr > 0.02, total_mass_arr, np.nan)
-        # luminosity_AGN_reduced_arr = np.where(radius_arr > 0.02, luminosity_AGN_arr, np.nan)
-        # observed_time_reduced_arr = np.where(radius_arr > 0.02, observed_time_arr, np.nan)
+        radius_more_than_20_arr = np.where(radius_arr > 0.02, radius_arr, np.nan)
+        dot_radius_reduced_arr = np.where(radius_arr > 0.02, dot_radius_arr, np.nan)
+        # dot_radius_reduced_arr.shape = dot_radius_arr.shape
+        time_reduced_arr = np.where(radius_arr > 0.02, time_arr, np.nan)
+        dot_mass_reduced_arr = np.where(radius_arr > 0.02, dot_mass_arr, np.nan)
+        mass_out_reduced_arr = np.where(radius_arr > 0.02, mass_out_arr, np.nan)
+        total_mass_reduced_arr = np.where(radius_arr > 0.02, total_mass_arr, np.nan)
+        luminosity_AGN_reduced_arr = np.where(radius_arr > 0.02, luminosity_AGN_arr, np.nan)
+        observed_time_reduced_arr = np.where(radius_arr > 0.02, observed_time_arr, np.nan)
 
 
 
@@ -204,14 +203,14 @@ if __name__ == '__main__':
         print("exec time --- %s seconds ---" % (time.time() - loop_time))
         # print(np.where(dot_radius_arr > 1000))
 
-        plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr, observed_time_arr, model_type[out_index], ' _nongrow_')
-        # plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
-        plotting_r_relation(radius_arr, dot_radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
-        plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, model_type[out_index], ' _nongrow_')
+        # plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr, observed_time_arr, model_type[out_index], ' _nongrow_')
+        # # plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
+        # plotting_r_relation(radius_arr, dot_radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
+        # plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, model_type[out_index], ' _nongrow_')
 
         # plotting_time_relation(time_reduced_arr, radius_more_than_20_arr, mass_out_reduced_arr, dot_mass_reduced_arr, observed_time_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
         # plotting_LumAGN_relation(luminosity_AGN_reduced_arr, dot_radius_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
-        # plotting_r_relation(radius_more_than_20_arr,dot_radius_reduced_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
+        plotting_r_relation(radius_more_than_20_arr,dot_radius_reduced_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
         # plotting_histogram(dot_radius_reduced_arr, dot_mass_reduced_arr, time_reduced_arr, model_type[out_index], ' _nongrow_more_than20pc_')
 
         print("plot time --- %s seconds ---" % (time.time() - exec_time))

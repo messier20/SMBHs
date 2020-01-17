@@ -55,9 +55,12 @@ def plotting_time_relation(time_arr, radius, mass_out, dot_mass, observed_time, 
 
     # obs_time = radius/dot_radius
     fig3, ax3 = Plot.setup_common_properties()
-    # ax3.set_ylim(1.e-2, 1.e8)
+    ax3.set_ylim(1.e1, 1.e4)
+    ax3.set_xlim(1.e-1, 1.e8)
+    ax3.set_yscale('log')
+    # ax3.set_xscale('log')
     ax3.set_ylabel('Mass outflow rate [$M_{sun}yr^{-1}$]')
-    ax3.set_xlabel('observed time kpc/km/s')
+    ax3.set_xlabel('observed time yr')
     p16 = ax3.scatter(observed_time[0,], dot_mass[0,], color=colors[0], marker='.', linewidth=0.3, s=0.4)
     p17 = ax3.scatter(observed_time[1,], dot_mass[1,], color=colors[1], marker='.', linewidth=0.3, s=0.4)
     p18 = ax3.scatter(observed_time[2,], dot_mass[2,], color=colors[2], marker='.', linewidth=0.3, s=0.4)

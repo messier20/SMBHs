@@ -1,7 +1,7 @@
 import os
 from input_parameters.initial_values import version
 
-graphs_path = '/home/monika/Documents/SMBHs/results/graphs/'
+graphs_path = 'C:/Users/Monika/PycharmProjects/SMBHs/results/graphs/'
 plots_version_folder = 'v' + str(version)+'/'
 # plots_version_folder = ''
 try:
