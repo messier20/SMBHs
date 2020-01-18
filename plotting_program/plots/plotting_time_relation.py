@@ -4,9 +4,12 @@ import pandas as pd
 from plotting_program.plots.PlotSetup import PlotSetup
 from plotting_program.plots.plots_settings import *
 
-def plotting_time_relation(time_arr, radius, mass_out, dot_mass, index):
+def plotting_time_relation(time_arr, radius, dot_mass, index):
     labels = [r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1']
     colors = ['black', 'b', 'g', 'r', 'orange']
+
+    time_arr = time_arr.values
+    radius = radius.values
 
     Plot = PlotSetup()
     fig1, ax1 = Plot.setup_time_rel()
