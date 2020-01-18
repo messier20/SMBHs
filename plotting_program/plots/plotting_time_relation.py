@@ -4,18 +4,7 @@ import pandas as pd
 from plotting_program.plots.PlotSetup import PlotSetup
 from plotting_program.plots.plots_settings import *
 
-def plotting_time_relation(time_arr, radius, mass_out, dot_mass, index, *type_name):
-
-    # time_arr.plot()
-    # print(time_arr.values)
-    # print('test')
-    # print(time_arr.shape)
-    # a = time_arr.values
-    # b = radius.values
-    # print(time_arr.iloc[1], ' time arr')
-    # print(a)
-    # print(a.shape)
-
+def plotting_time_relation(time_arr, radius, mass_out, dot_mass, index):
     labels = [r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1']
     colors = ['black', 'b', 'g', 'r', 'orange']
 
@@ -23,14 +12,14 @@ def plotting_time_relation(time_arr, radius, mass_out, dot_mass, index, *type_na
     fig1, ax1 = Plot.setup_time_rel()
     ax1.set_ylim(1.e-2, 1.e2)
     ax1.set_ylabel('radius [$kpc$]')
-    p1 = ax1.plot(time_arr[:, 0], radius[:, 0], color=colors[0], marker='.', linewidth=0.3)
-    p2 = ax1.plot(time_arr[:, 1], radius[:, 1], color=colors[1], marker='.', linewidth=0.3)
-    p3 = ax1.plot(time_arr[:, 2], radius[:, 2], color=colors[2], marker='.', linewidth=0.3)
-    p4 = ax1.plot(time_arr[:, 3], radius[:, 3], color=colors[3], marker='.', linewidth=0.3)
-    p5 = ax1.plot(time_arr[:, 4], radius[:, 4], color=colors[4], marker='.', linewidth=0.3)
-    #
-    ax1.legend(( p2, p3, p4, p5), (r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1'), markerscale=10)
-    fig1.savefig(graphs_path +plots_version_folder  + 'threepart1' +str(index)+'.png', bbox_inches='tight')
+    p1 = ax1.plot(time_arr[:, 0], radius[:, 0], color=colors[0],  label=labels[0])
+    p2 = ax1.plot(time_arr[:, 1], radius[:, 1], color=colors[1],  label=labels[1])
+    p3 = ax1.plot(time_arr[:, 2], radius[:, 2], color=colors[2],  label=labels[2])
+    p4 = ax1.plot(time_arr[:, 3], radius[:, 3], color=colors[3],  label=labels[3])
+    p5 = ax1.plot(time_arr[:, 4], radius[:, 4], color=colors[4],  label=labels[4])
+    ax1.legend()
+    ax1.set_title(str(index) + '$x10^{9}$')
+    fig1.savefig(graphs_path +plots_version_folder  + 'radius-time-' +str(index)+'.png', bbox_inches='tight')
     plt.close(fig1)
 
     # fig2, ax2 = Plot.setup_time_rel()
