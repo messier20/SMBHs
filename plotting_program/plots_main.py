@@ -48,14 +48,22 @@ for out_index in range(len(bulge_disc_totalmass_fractions)):
     temp_dot_mass = temp_dot_mass.transpose()
     # print(max(temp[:, 0]))
     for index, item in enumerate(temp_dot_mass[:, ]):
+        count = 0
+        for i in item:
+            if i > 0:
+                count = count + 1
+        dot_mass_one_point_arr[index][out_index] = np.nansum(item)/count
         # dot_mass_one_point_arr[index][out_index] = max(item)
-        dot_mass_one_point_arr[index][out_index] = np.nansum(item)/len(item)
 
-    # temp_velocity = np.where(radius_in_bulge_1d < bulge_scales[out_index], dot_radius_in_bulge_1d, 0)
-    temp_velocity = np.where(radius_in_bulge_1d < bulge_scales[out_index], dot_radius_in_bulge_1d, np.nan)
+    temp_velocity = np.where(radius_in_bulge_1d < bulge_scales[out_index], dot_radius_in_bulge_1d, 0)
+    # temp_velocity = np.where(radius_in_bulge_1d < bulge_scales[out_index], dot_radius_in_bulge_1d, np.nan)
     temp_velocity = temp_velocity.transpose()
     for index, item in enumerate(temp_velocity[:, ]):
-        dot_radius_one_point_arr[index][out_index] = np.nansum(item)/len(item)
+        count = 0
+        for i in item:
+            if i > 0:
+                count = count + 1
+        dot_radius_one_point_arr[index][out_index] = np.nansum(item)/count
         # dot_radius_one_point_arr[index][out_index] = max(item)
 
 plotting_mbulge_relation(dot_mass_one_point_arr, dot_radius_one_point_arr, 'average')
