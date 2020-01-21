@@ -19,6 +19,7 @@ dot_mass_bulge_arr = [0 for x in range(len(bulge_disc_totalmass_fractions))]
 # dot_mass_one_point_arr = [0 for x in range(len(bulge_disc_totalmass_fractions))]
 dot_mass_one_point_arr = [[0 for i in range(len(bulge_disc_totalmass_fractions))] for j in range(len(bulge_disc_gas_fractions))]
 dot_radius_one_point_arr = [[0 for i in range(len(bulge_disc_totalmass_fractions))] for j in range(len(bulge_disc_gas_fractions))]
+dot_radius_one_point_arr_test = [[0 for i in range(len(bulge_disc_totalmass_fractions))] for j in range(len(bulge_disc_gas_fractions))]
 # print(dot_mass_one_point_arr)
 
 for out_index in range(len(bulge_disc_totalmass_fractions)):
@@ -36,7 +37,7 @@ for out_index in range(len(bulge_disc_totalmass_fractions)):
     radius_in_bulge_1d = radius_arr[out_index].values
     dot_mass_in_bulge_1d = dot_mass_arr[out_index].values
     dot_radius_in_bulge_1d = dot_radius_arr[out_index].values
-    # print(radius_in_bulge)
+
     dot_mass_bulge_arr[out_index] = np.where(radius_in_bulge_1d < bulge_scales[out_index], dot_mass_in_bulge_1d , np.nan)
 
     # dot_mass_one_point_arr[out_index] =
@@ -66,5 +67,6 @@ for out_index in range(len(bulge_disc_totalmass_fractions)):
         dot_radius_one_point_arr[index][out_index] = np.nansum(item)/count
         # dot_radius_one_point_arr[index][out_index] = max(item)
 
-plotting_mbulge_relation(dot_mass_one_point_arr, dot_radius_one_point_arr, 'average')
+# plotting_mbulge_relation(dot_mass_one_point_arr, dot_radius_one_point_arr, 'average')
 # plotting_mbulge_relation(dot_mass_one_point_arr, dot_radius_one_point_arr, 'max')
+print(dot_mass_one_point_arr)
