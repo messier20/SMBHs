@@ -1,7 +1,7 @@
 from model_program.input_parameters.program_units import unit_kpc, unit_velocity
 import model_program.input_parameters.parameters as params
 
-version = 4.0
+version = 4.2
 model_type = ['mb20', 'mb30', 'mb40', 'mb50', 'mb60', 'mb70', 'mb80', 'mb90', 'mb100','mb200', 'mb300']
 
 # TODO maybe add prefix init_ for all values

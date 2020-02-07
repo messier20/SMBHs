@@ -35,7 +35,7 @@ quasar_durations = [quasar_duration for i in range(0, ITERATIONS_NUM)]  # ;quasa
 drop_timescale = 3.e5 / unit_year
 alpha_drop = 0.5
 eddingtion_ration = 1.  # ;(maximum) Eddington ratio
-smbh_mass_init = 3.e8 / unit_sunmass  # ;SMBH mass in Solar masses
+smbh_mass_init = 1.e8 / unit_sunmass  # ;SMBH mass in Solar masses
 smbh_masses = [smbh_mass_init for i in range(0, ITERATIONS_NUM)]
 salpeter_timescale = 4.5e8*RADIATIVE_EFFICIENCY_ETA/unit_year        #;SMBH growth timescale at Eddington rate - Salpeter timescale
 

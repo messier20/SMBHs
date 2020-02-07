@@ -1,28 +1,38 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-
+import numpy as np
+from model_program.input_parameters.galaxy_parameters import bulge_scales, bulge_masses
 from plotting_program.plots.PlotSetup import PlotSetup
 from plotting_program.plots.plots_settings import *
 
-def plotting_time_relation(time_arr, radius, dot_mass, index):
+def plotting_time_relation(time_arr, radius, dot_mass, model_index, index):
     labels = [r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1']
     colors = ['black', 'b', 'g', 'r', 'orange']
 
     time_arr = time_arr.values
     radius = radius.values
+    # arr = np.zeros(100000000)
+    # print(arr)
+    # bulge_line = np.array([bulge_scales[index] for i in range(len(arr))])
 
     Plot = PlotSetup()
     fig1, ax1 = Plot.setup_time_rel()
     ax1.set_ylim(1.e-2, 1.e2)
-    ax1.set_ylabel('radius [$kpc$]')
+    ax1.set_ylabel('radius [$kpc$]', fontsize=14)
     p1 = ax1.plot(time_arr[:, 0], radius[:, 0], color=colors[0],  label=labels[0])
     p2 = ax1.plot(time_arr[:, 1], radius[:, 1], color=colors[1],  label=labels[1])
     p3 = ax1.plot(time_arr[:, 2], radius[:, 2], color=colors[2],  label=labels[2])
     p4 = ax1.plot(time_arr[:, 3], radius[:, 3], color=colors[3],  label=labels[3])
     p5 = ax1.plot(time_arr[:, 4], radius[:, 4], color=colors[4],  label=labels[4])
-    ax1.legend()
-    ax1.set_title(str(index) + '$x10^{9}$')
-    fig1.savefig(graphs_path +plots_version_folder  + 'radius-time-' +str(index)+'.png', bbox_inches='tight')
+    ax1.plot([100, 1e8], [bulge_scales[index], bulge_scales[index]], '--', color='purple', label="$R_{bulge}=$"+ str(format(bulge_scales[index], '.2')) + " kpc")
+    ax1.legend(title="$M_{bulge} = $ "+ str(format(bulge_masses[index],'.1e')) +"$M_\odot$")
+
+    # for tick in ax1.xaxis.get_major_ticks():
+    #     tick.label.set_fontsize('large')
+        # tick.set_fontsize('large')
+
+        # ax1.set_title(str(model_index) + '$x10^{9}$')
+    fig1.savefig(graphs_path +plots_version_folder  + 'radius-time-' +str(model_index)+'-fix.png', bbox_inches='tight')
     plt.close(fig1)
 
     # fig2, ax2 = Plot.setup_time_rel()

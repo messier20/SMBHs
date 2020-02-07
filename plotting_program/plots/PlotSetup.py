@@ -11,7 +11,7 @@ class PlotSetup:
         ax.set_xlim(1e3, 1e8)
         ax.set_yscale('log')
         ax.set_xscale('log')
-        ax.set_xlabel('time [$yr$]')
+        ax.set_xlabel('time [$yr$]', fontsize=14)
 
         return fig, ax
     def setup_LAGN_rel(self):
@@ -38,7 +38,7 @@ class PlotSetup:
 
     def setup_common_properties(self):
         fig, ax = plt.subplots()
-        ax.tick_params(axis='both', which='both', direction='in', top=True, right=True)
+        ax.tick_params(axis='both', which='both', direction='in', top=True, right=True, width=1.2, labelsize='large')
 
         return  fig, ax
 
