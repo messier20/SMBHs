@@ -20,7 +20,7 @@ disc_gas_fractions = [0.8 for i in range(0, ITERATIONS_NUM)]  # gas fraction in 
 halo_concentration_parameters = [10 for i in range(0, ITERATIONS_NUM)]  # concentration parameter, only necessary for NFW halos
 
 # AGN parameters
-quasar_dt = 1.e6 / unit_year #5.d4/unityear   ;quasar duration
+quasar_dt = 1.e6 / unit_year #time between successive quasar phases
 quasar_dts = [quasar_dt for i in range(0, ITERATIONS_NUM)]  # 1.d6/unityear time between successive quasar phases
 quasar_duration = 5.e10 / unit_year
 quasar_durations = [quasar_duration for i in range(0, ITERATIONS_NUM)]  # ;quasar duration

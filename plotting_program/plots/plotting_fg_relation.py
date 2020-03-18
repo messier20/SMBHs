@@ -45,7 +45,7 @@ def plotting_fg_relation(dot_radius, dot_r_ln, dot_mass, dot_m_ln):
     ax.set_ylabel('velocity [km/s]', fontsize=14)
     ax.set_xlabel('Bulge gas fractions ', fontsize=14)
 
-    ax.set_ylim(2.8e2, 1e3)
+    ax.set_ylim(2e1, 1e3)
     ax.set_xlim(0.045, 1.1)
     ax.scatter(bulge_disc_gas_fractions, dot_radius[:, 0 ], label = labels[0], s=7)
     ax.scatter(bulge_disc_gas_fractions, dot_radius[:, 1], label = labels[2],  s=7)
@@ -108,7 +108,7 @@ def plotting_fg_relation(dot_radius, dot_r_ln, dot_mass, dot_m_ln):
     ax.set_ylabel('Mass outflow rate [$M_{sun}yr^{-1}$]', fontsize=14)
     ax.set_xlabel('Bulge gas fractions ', fontsize=14)
 
-    ax.set_ylim(7e2, 8e3)
+    ax.set_ylim(2e2, 8e3)
     ax.set_xlim(0.045, 1.1)
     ax.scatter(bulge_disc_gas_fractions, dot_mass[:, 0], label=labels[0], s=7)
     ax.scatter(bulge_disc_gas_fractions, dot_mass[:, 1], label=labels[2], s=7)

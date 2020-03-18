@@ -9,3 +9,5 @@ dm_t_on = True
 r_r_on = True
 dr_r_on = True
 dm_bm_on = True
+obs_time_on = True
+relations_with_calc_dm = True

@@ -4,15 +4,17 @@ from model_program.input_parameters.galaxy_parameters import bulge_scales, bulge
 from plotting_program.plots.PlotSetup import PlotSetup
 from plotting_program.plots.plots_settings import *
 from plotting_program.turning_plots_on_off import r_r_on, dr_r_on
+import numpy as np
 
 
-def plotting_r_relation(radius, dot_radius, dot_mass, model_type, index):
+def plotting_r_relation(radius, dot_radius, dot_mass, out_mass, model_type, index):
     # graphs_path = '/home/monika/Documents/SMBHs/plots/'
     Plot = PlotSetup()
 
     radius = radius.values
     dot_radius = dot_radius.values
     dot_mass = dot_mass.values
+    out_mass = out_mass.values
 
     labels = [r'$f_g$ = 0.05', r'$f_g$ = 0.1', r'$f_g$ = 0.25', r'$f_g$ = 0.5', r'$f_g$ = 1']
     colors = ['black', 'b', 'g', 'r', 'orange']
@@ -21,7 +23,7 @@ def plotting_r_relation(radius, dot_radius, dot_mass, model_type, index):
 #
     if r_r_on:
         fig1, ax1 = Plot.setup_common_properties()
-        ax1.set_ylim(1.e2, 1.e4)
+        ax1.set_ylim(5.e1, 1.e4)
         ax1.set_xlim((3.e-2, 6.e1))
         ax1.set_ylabel('velocity [$km/s$]', fontsize=14)
         ax1.set_xlabel('radius [$kpc$]', fontsize=14)
@@ -44,7 +46,7 @@ def plotting_r_relation(radius, dot_radius, dot_mass, model_type, index):
         ax2.set_yscale('log')
         # ax2.set_xscale('log')
         # ax1.set_xlim((1.e-3, 1.e2))
-        ax2.set_ylim(1.e-1, 1e4)
+        ax2.set_ylim(5.e-2, 1e4)
         Plot.plotting(ax2, radius, dot_mass, colors, labels)
         ax2.plot([bulge_scales[index], bulge_scales[index]], [1.e-1, 1e4], '--', color='purple',
                  label="$R_{bulge}=$" + str(format(bulge_scales[index], '.2')) + " kpc")
@@ -53,6 +55,27 @@ def plotting_r_relation(radius, dot_radius, dot_mass, model_type, index):
         # Plot.add_legend_gas_fractions(ax2, p1, p2, p3, p4, p5)
         fig2.savefig(graphs_path + plots_version_folder + 'dotmass-radius' + str(model_type) + '.png', bbox_inches='tight')
         plt.close(fig2)
+
+
+    mv = out_mass*dot_radius* 1.02269032e-9
+    calculated_dot_mass = np.divide(mv, radius)
+    fig4, ax4 = Plot.setup_common_properties()
+    ax4.set_ylabel('Mass outflow rate [$M_{sun}yr^{-1}$]', fontsize=14)
+    ax4.set_xlabel('radius [$kpc$]', fontsize=14)
+    ax4.set_yscale('log')
+    # ax2.set_xscale('log')
+    ax4.set_xlim(0, 29)
+    ax4.set_ylim(5.e1, 1e4)
+    Plot.plotting(ax4, radius, np.array(calculated_dot_mass), colors, labels)
+    ax4.plot([bulge_scales[index], bulge_scales[index]], [1.e-1, 1e4], '--', color='purple',
+             label="$R_{bulge}=$" + str(format(bulge_scales[index], '.2')) + " kpc")
+    # ax2.set_title(model_type + '$x10^{9}$')
+    ax4.legend(title="$M_{bulge} = $ " + str(format(bulge_masses[index], '.2e')) + "$M_\odot$")
+    # Plot.add_legend_gas_fractions(ax2, p1, p2, p3, p4, p5)
+    fig4.savefig(graphs_path + plots_version_folder + 'dotmass-calc--radius' + str(model_type) + '.png', bbox_inches='tight')
+    plt.close(fig4)
+
+
     #
     # fig3, ax3 = Plot.setup_common_properties()
     # ax3.set_ylabel('Mass outflow [$M_{sun}}$]')

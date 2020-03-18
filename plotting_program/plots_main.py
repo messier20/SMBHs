@@ -12,7 +12,7 @@ from plotting_program.initial_arrays import *
 import numpy as np
 
 from plotting_program.turning_plots_on_off import time_relation_on, radius_relation_on, average_dm_bm_on, dm_bm_on, \
-    max_dm_bm_on, fg_relation
+    max_dm_bm_on, fg_relation, relations_with_calc_dm
 
 outputs_path = "C:/Users/Monika/PycharmProjects/SMBHs/model_program/results/output_values/"
 values_version_folder = 'v' + str(version) + '/'
@@ -30,45 +30,61 @@ for index in range(len(bulge_disc_totalmass_fractions)):
     out_mass_arr[index] = pandas.read_csv(outputs_path + params_output_name + 'out_mass' + model_type[index] + '.csv',header=None, index_col=False)
 
     if time_relation_on:
-        plotting_time_relation(time_arr[index], radius_arr[index], dot_mass_arr[index], out_mass_arr[index], model_type[index], index)
+        plotting_time_relation(time_arr[index], radius_arr[index], dot_mass_arr[index], out_mass_arr[index], dot_radius_arr[index], model_type[index], index)
     if radius_relation_on:
-        plotting_r_relation(radius_arr[index], dot_radius_arr[index], dot_mass_arr[index], model_type[index], index)
+        plotting_r_relation(radius_arr[index], dot_radius_arr[index], dot_mass_arr[index], out_mass_arr[index], model_type[index], index)
 
-    if dm_bm_on or fg_relation:
+        if dm_bm_on or fg_relation or relations_with_calc_dm:
 
-        radius_in_bulge_1d = radius_arr[index].values
-        dot_mass_in_bulge_1d = dot_mass_arr[index].values
-        dot_radius_in_bulge_1d = dot_radius_arr[index].values
+            radius_in_bulge_1d = radius_arr[index].values
+            dot_mass_in_bulge_1d = dot_mass_arr[index].values
+            dot_radius_in_bulge_1d = dot_radius_arr[index].values
+            out_mass_in_bulge_1d = out_mass_arr[index].values
 
-        temp_velocity = np.where(radius_in_bulge_1d < bulge_scales[index], dot_radius_in_bulge_1d, 0)
-        temp_velocity = temp_velocity.transpose()
+            temp_velocity = np.where(radius_in_bulge_1d < bulge_scales[index], dot_radius_in_bulge_1d, 0)
+            temp_velocity = temp_velocity.transpose()
 
-        dot_mass_bulge_arr[index] = np.where(radius_in_bulge_1d < bulge_scales[index], dot_mass_in_bulge_1d, np.nan)
-        temp_dot_mass = np.where(radius_in_bulge_1d < bulge_scales[index], dot_mass_in_bulge_1d, np.nan)
-        temp_dot_mass = temp_dot_mass.transpose()
+            dot_mass_bulge_arr[index] = np.where(radius_in_bulge_1d < bulge_scales[index], dot_mass_in_bulge_1d, np.nan)
+            temp_dot_mass = np.where(radius_in_bulge_1d < bulge_scales[index], dot_mass_in_bulge_1d, np.nan)
+            temp_dot_mass = temp_dot_mass.transpose()
 
-        for idx, item in enumerate(temp_dot_mass[:, ]):
-            count = 0
-            for i in item:
-                if i > 0:
-                    count = count + 1
-            avg_dot_mass_one_point_arr_ln[idx][index] = math.log(np.nansum(item) / count)
-            avg_dot_mass_one_point_arr[idx][index] = np.nansum(item) / count
+            for idx, item in enumerate(temp_dot_mass[:, ]):
+                count = 0
+                for i in item:
+                    if i > 0:
+                        count = count + 1
+                avg_dot_mass_one_point_arr_ln[idx][index] = math.log(np.nansum(item) / count)
+                avg_dot_mass_one_point_arr[idx][index] = np.nansum(item) / count
 
-            max_dot_mass_one_point_arr_ln[idx][index] = math.log(np.nanmax(item))
-            max_dot_mass_one_point_arr[idx][index] = np.nanmax(item)
-            # dot_mass_one_point_arr[idx][index] = max(item)
+                max_dot_mass_one_point_arr_ln[idx][index] = math.log(np.nanmax(item))
+                max_dot_mass_one_point_arr[idx][index] = np.nanmax(item)
+                # dot_mass_one_point_arr[idx][index] = max(item)
 
-        for idx, item in enumerate(temp_velocity[:, ]):
-            count = 0
-            for i in item:
-                if i > 0:
-                    count = count + 1
-            avg_dot_radius_one_point_arr[idx][index] = np.nansum(item) / count
-            avg_dot_radius_one_point_arr_ln[idx][index] = math.log(np.nansum(item) / count)
+            for idx, item in enumerate(temp_velocity[:, ]):
+                count = 0
+                for i in item:
+                    if i > 0:
+                        count = count + 1
+                avg_dot_radius_one_point_arr[idx][index] = np.nansum(item) / count
+                avg_dot_radius_one_point_arr_ln[idx][index] = math.log(np.nansum(item) / count)
 
-            max_dot_radius_one_point_arr_ln[idx][index] = math.log(np.nanmax(item))
-            max_dot_radius_one_point_arr[idx][index] = np.nanmax(item)
+                max_dot_radius_one_point_arr_ln[idx][index] = math.log(np.nanmax(item))
+                max_dot_radius_one_point_arr[idx][index] = np.nanmax(item)
+
+            if relations_with_calc_dm:
+                mv = np.array(out_mass_in_bulge_1d).transpose() * temp_velocity * 1.02269032e-9
+                calculated_dot_mass = np.divide(mv, np.array(radius_in_bulge_1d).transpose())
+
+                for idx, item in enumerate(calculated_dot_mass[:, ]):
+                    count = 0
+                    for i in item:
+                        if i > 0:
+                            count = count + 1
+                    avg_calc_dot_mass_one_point_arr_ln[idx][index] = math.log(np.nansum(item) / count)
+                    avg_calc_dot_mass_one_point_arr[idx][index] = np.nansum(item) / count
+
+
+
 
 if average_dm_bm_on:
     plotting_mbulge_relation(avg_dot_mass_one_point_arr, avg_dot_radius_one_point_arr, avg_dot_mass_one_point_arr_ln,
@@ -80,3 +96,6 @@ if max_dm_bm_on:
 
 if fg_relation:
     plotting_fg_relation(np.array(avg_dot_radius_one_point_arr), np.array(avg_dot_radius_one_point_arr_ln), np.array(avg_dot_mass_one_point_arr), np.array(avg_dot_mass_one_point_arr_ln))
+
+plotting_mbulge_relation(avg_calc_dot_mass_one_point_arr, avg_dot_radius_one_point_arr, avg_calc_dot_mass_one_point_arr_ln,
+                         avg_dot_radius_one_point_arr_ln, 'calc')
