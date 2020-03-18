@@ -14,6 +14,7 @@ avg_dot_mass_one_point_arr = [[0 for i in range(len(bulge_disc_totalmass_fractio
 avg_dot_radius_one_point_arr = [[0 for i in range(len(bulge_disc_totalmass_fractions))] for j in range(len(bulge_disc_gas_fractions))]
 dot_radius_one_point_arr_test = [[0 for i in range(len(bulge_disc_totalmass_fractions))] for j in range(len(bulge_disc_gas_fractions))]
 velocity_one_point_arr = [[0 for i in range(len(bulge_disc_totalmass_fractions))] for j in range(len(bulge_disc_gas_fractions))]
+velocity_one_point_arr_ln = [[0 for i in range(len(bulge_disc_totalmass_fractions))] for j in range(len(bulge_disc_gas_fractions))]
 avg_dot_mass_one_point_arr_ln = [[0 for i in range(len(bulge_disc_totalmass_fractions))] for j in range(len(bulge_disc_gas_fractions))]
 avg_dot_radius_one_point_arr_ln = [[0 for i in range(len(bulge_disc_totalmass_fractions))] for j in range(len(bulge_disc_gas_fractions))]
 avg_dot_mass_one_point_arr_ln = [[0 for i in range(len(bulge_disc_totalmass_fractions))] for j in range(len(bulge_disc_gas_fractions))]
