@@ -175,6 +175,9 @@ if __name__ == '__main__':
         total_mass_reduced_arr = np.where(radius_arr > 0.02, total_mass_arr, np.nan)
         luminosity_AGN_reduced_arr = np.where(radius_arr > 0.02, luminosity_AGN_arr, np.nan)
         observed_time_reduced_arr = np.where(radius_arr > 0.02, observed_time_arr, np.nan)
+        category = ['none' for i in range(len(luminosity_AGN_reduced_arr[0]))]
+
+        np.savez(str(params_path) + params_output_name + model_type[out_index] +'lum_none', radius=radius_more_than_20_arr, velocity=dot_radius_reduced_arr, time=time_reduced_arr, dot_mass=dot_mass_reduced_arr, luminosity=luminosity_AGN_reduced_arr, category=category)
 
         radius_df = pd.DataFrame(np.array(radius_more_than_20_arr).transpose())
         radius_df.to_csv((str(params_path) + params_output_name + 'radius' + model_type[out_index] + '.csv'),
@@ -224,18 +227,6 @@ if __name__ == '__main__':
         exec_time = time.time()
         print("exec time --- %s seconds ---" % (time.time() - loop_time))
         # print(np.where(dot_radius_arr > 1000))
-
-        # plotting_time_relation(time_arr, radius_arr, mass_out_arr, dot_mass_arr, observed_time_arr, model_type[out_index], ' _nongrow_')
-        # # plotting_LumAGN_relation(luminosity_AGN_arr, dot_radius_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
-        # plotting_r_relation(radius_arr, dot_radius_arr, mass_out_arr, dot_mass_arr, model_type[out_index], ' _nongrow_')
-        # plotting_histogram(dot_radius_arr, dot_mass_arr, time_arr, model_type[out_index], ' _nongrow_')
-        #
-        # # plotting_time_relation(time_reduced_arr, radius_more_than_20_arr, mass_out_reduced_arr, dot_mass_reduced_arr, observed_time_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
-        # # plotting_LumAGN_relation(luminosity_AGN_reduced_arr, dot_radius_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
-        # # plotting_r_relation(radius_more_than_20_arr,dot_radius_reduced_arr, mass_out_reduced_arr, dot_mass_reduced_arr,model_type[out_index], ' _nongrow_more_than20pc_')
-        # # plotting_histogram(dot_radius_reduced_arr, dot_mass_reduced_arr, time_reduced_arr, model_type[out_index], ' _nongrow_more_than20pc_')
-        #
-        # print("plot time --- %s seconds ---" % (time.time() - exec_time))
 
     print("program time --- %s seconds ---" % (time.time() - start_time))
 

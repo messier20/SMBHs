@@ -2,7 +2,7 @@ import os
 from model_program.input_parameters.initial_values import version
 
 graphs_path = "./graphs/"
-plots_version_folder = 'v' + str(version) + '.1/'
+plots_version_folder = 'v' + str(version) + '.2/'
 # plots_version_folder = ''
 try:
     os.mkdir(graphs_path + plots_version_folder)

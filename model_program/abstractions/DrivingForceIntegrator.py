@@ -8,7 +8,6 @@ from model_program.models import ProfileFormulas
 class DrivingForceIntegrator:
     def __init__(self):
         pass
-        # self.Calculator = ProfileFormulas()
 
     def driving_force_calc(self, driving_force, mg, radius, eta_drive, integration_method, luminosity, mdg, dot_radius,
                            dotdot_radius, mp, mdp, mddg, dot_rt_arr, radius_arr, dot_radius_arr, dotdot_radius_arr, k,

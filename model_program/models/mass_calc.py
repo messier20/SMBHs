@@ -49,7 +49,6 @@ def mass_calculation(radius, dot_radius, dotdot_radius, delta_radius, halo_profi
     :param bulge_totalmass:
     :return: mp, mdp, mg, mdg, mddg, rhogas, sigma, deltaphi, phi, phigrad, rhogas2
     """
-    # Calculator = ProfileFormulas()
 
     halo_scale = virial_radius / halo_concentration_parameter
     radius_scaled = radius / halo_scale

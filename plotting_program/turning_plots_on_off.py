@@ -1,0 +1,10 @@
+time_relation_on = False
+radius_relation_on = False
+average_dm_bm_on = False
+max_dm_bm_on = False
+mass_out_t_on = False
+r_t_on = False
+dm_t_on = True
+r_r_on = True
+dr_r_on = True
+dm_bm_on = False
